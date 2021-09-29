@@ -14,7 +14,7 @@
 
 
 function mf_chess_pgn_basics() {
-	$NAGs = file(+__DIR__.'/../configuration/NAG.txt');
+	$NAGs = file(__DIR__.'/../configuration/NAG.txt');
 	$i = 0;
 	foreach ($NAGs as $line) {
 		$line = explode("\t", $line);
