@@ -1,0 +1,71 @@
+NAG	CSM	Symbol	Group	Description
+1	!	!	
+2	?	?	
+3	!!	!!	
+4	??	??	
+5	!?	!?	
+6	?!	?!	
+8	[]		
+11	+/=	2A72	evaluation
+13	~~		evaluation
+14	+/=		evaluation
+15	=/+		evaluation
+16	+/-		evaluation
+17	-/+		evaluation
+18	+-		evaluation
+19	-+		evaluation
+22	(.)		
+44	~/=		evaluation
+132	&lt;=&gt;		evaluation
+36	|^		evaluation
+40	-&gt;		evaluation
+138	(+)		evaluation
+32	@		evaluation
+146	N	N	evaluation
+140	/\		prefix
+141	\/		prefix
+142	&gt;=		prefix
+143	&lt;=		prefix
+144	=		prefix
+145	RR		prefix
+151	^^		extended
+152	^^		extended
+153	^-		extended
+154	^=		extended
+159	o/o		extended
+160	o/o		extended
+155	oo		extended
+156	oo		extended
+157	o..o		extended
+158	o..o		extended
+161	o^		extended
+162	o^		extended
+163	&gt;	&gt;	extended
+164	&gt;	&gt;	extended
+149	&lt;-&gt;		extended
+150	/^		extended
+149	_|_		extended
+48	[+]		extended
+49	[+]		extended
+50	[+]		extended
+51	[+]		extended
+52	[+]		extended
+53	[+]		extended
+54	&gt;&gt;		extended
+55	&gt;&gt;		extended
+56	&gt;&gt;		extended
+57	&gt;&gt;		extended
+58	&gt;&gt;		extended
+59	&gt;&gt;		extended
+60	&lt;&lt;		extended
+61	&lt;&lt;		extended
+62	&lt;&lt;		extended
+63	&lt;&lt;		extended
+64	&lt;&lt;		extended
+65	&lt;&lt;		extended
+24	()		extended
+25	()		extended
+26	()		extended
+27	()		extended
+28	()		extended
+29	()		extended
