@@ -52,14 +52,18 @@ function mod_chess_diagram($params, $settings) {
 	
 	// allgemeine Definitionen
 	
+	$alphabet = range('a', 'z');
 	$field_top_right = "w";
 	$field_bottom_right = "s";
 	$field_count = 1;
-	$fields_per_line = 8; // muss auch irgendwo anders herkommen
+	$fields_per_line = $settings['fields_per_line'] ?? 8;
+	$letters = range('A', strtoupper($alphabet[$fields_per_line - 1]));
+	foreach ($letters as $letter) $data['letters'][]['letter'] = $letter;
+	
 	if (!empty($settings['caption'])) $data['caption'] = $settings['caption'];
 
 	$replace_field = "";
-	for ($i = 1; $i <= 8; $i++) {
+	for ($i = 1; $i <= $fields_per_line; $i++) {
 		$replace_field .= "1";
 		$position = str_replace($i, $replace_field, $position);
 	}

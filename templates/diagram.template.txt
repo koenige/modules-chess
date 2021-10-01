@@ -15,7 +15,11 @@
 <caption align="top" class="amzug">%%% condition if caption %%%%%% item caption %%%%%% condition else %%%Schwarz am Zug%%% condition endif %%%</caption>
 %%% condition endif %%%
 <tfoot>
-<tr><td>&nbsp;&nbsp;</td><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th></tr>
+<tr><td>&nbsp;&nbsp;</td>
+%%% loop letters %%%
+<th>%%% item letter %%%</th>
+%%% loop end %%%
+</tr>
 </tfoot>
 <tbody>
 %%% loop rows %%%
