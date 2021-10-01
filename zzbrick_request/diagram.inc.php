@@ -82,7 +82,7 @@ function mod_chess_diagram($params, $settings) {
 	
 	// mark pieces somehow
 	$mark['white_moves'] = 'x';
-	$mark['black_moves'] = 'y';
+	$mark['black_moves'] = 'xs';
 	$mark['mark'] = 'z';
 	$mark['flip'] = '180';
 	$attr = [];
@@ -160,6 +160,34 @@ function mod_chess_diagram($params, $settings) {
 		}
 		$i++;
 	}
+	if (!empty($settings['cut'])) {
+		$cut = explode('/', $settings['cut']);
+		foreach ($cut as $area) {
+			$area = explode('-', $area);
+			$type = is_numeric($area[0]) ? 'rows' : 'lines';
+			if ($type === 'lines') {
+				$area[0] = array_search(strtolower($area[0]), $alphabet);
+				$area[1] = array_search(strtolower($area[1]), $alphabet);
+			}
+			foreach ($data['rows'] as $row => $line) {
+				switch ($type) {
+				case 'rows':
+					if ($row < $area[0] OR $row > $area[1]) {
+						unset($data['rows'][$row]);
+					}
+					break;
+				case 'lines':
+					foreach ($line['cells'] as $cell_index => $cell) {
+						if ($cell_index < $area[0] OR $cell_index > $area[1]) {
+							unset($data['rows'][$row]['cells'][$cell_index]);
+							unset($data['letters'][$cell_index]);
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	$page['text'] = wrap_template('diagram', $data);
 	return $page;
 }
