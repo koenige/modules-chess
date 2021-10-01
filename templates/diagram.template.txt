@@ -1,0 +1,29 @@
+# chess module
+# template for diagram with GIFs
+#
+# Part of »Zugzwang Project«
+# http://www.zugzwang.org/modules/chess
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2015, 2021 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+<table summary="Stellung auf Schachbrett" class="brett">
+%%% condition if white_to_move %%%
+<caption align="bottom" class="amzug">Weiß am Zug</caption>
+%%% condition elseif black_to_move %%%
+<caption align="top" class="amzug">Schwarz am Zug</caption>
+%%% condition endif %%%
+<tfoot>
+<tr><td>&nbsp;&nbsp;</td><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th></tr>
+</tfoot>
+<tbody>
+%%% loop rows %%%
+<tr>
+<th>%%% item no %%%&nbsp;</th>
+%%% loop cells %%%
+<td%%% item class " class='%s'" %%%><img src="/layout/figuren/%%% item src %%%%%% item field %%%.gif" alt="%%% item alt %%%" title="%%% item title %%%" width="30" height="30"></td>
+%%% loop end %%%</tr>
+%%% loop end %%%
+</tbody>
+</table>
