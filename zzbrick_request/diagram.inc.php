@@ -25,7 +25,7 @@
  * @return string HTML code for diagram
  * @todo use preg_match() to check whether string is valid
  */
-function mod_chess_diagram($params) {
+function mod_chess_diagram($params, $settings) {
 	$fen = implode(' ', $params);
 
 	// cleanup @todo redirect
@@ -56,6 +56,7 @@ function mod_chess_diagram($params) {
 	$field_bottom_right = "s";
 	$field_count = 1;
 	$fields_per_line = 8; // muss auch irgendwo anders herkommen
+	if (!empty($settings['caption'])) $data['caption'] = $settings['caption'];
 
 	$replace_field = "";
 	for ($i = 1; $i <= 8; $i++) {

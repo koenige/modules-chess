@@ -10,9 +10,9 @@
 #
 <table summary="Stellung auf Schachbrett" class="brett">
 %%% condition if white_to_move %%%
-<caption align="bottom" class="amzug">Weiß am Zug</caption>
+<caption align="bottom" class="amzug">%%% condition if caption %%%%%% item caption %%%%%% condition else %%%Weiß am Zug%%% condition endif %%%</caption>
 %%% condition elseif black_to_move %%%
-<caption align="top" class="amzug">Schwarz am Zug</caption>
+<caption align="top" class="amzug">%%% condition if caption %%%%%% item caption %%%%%% condition else %%%Schwarz am Zug%%% condition endif %%%</caption>
 %%% condition endif %%%
 <tfoot>
 <tr><td>&nbsp;&nbsp;</td><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th></tr>
