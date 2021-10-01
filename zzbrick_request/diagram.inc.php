@@ -78,6 +78,8 @@ function mod_chess_diagram($params, $settings) {
 		default: break; // @todo errorhandling
 	}
 
+	$settings['check'] = $settings['check'] ?? true;
+	
 	$data['board'] = '';
 	foreach ($lines as $line) {
 		$no = $lines_count - $i;
@@ -109,8 +111,9 @@ function mod_chess_diagram($params, $settings) {
 				case "p": $cell['src'] = "sB"; $cell['alt'] = "b"; $cell['title'] = 'schwarzer Bauer'; break;
 				case "1": $cell['src'] = ""; $cell['alt'] = "."; $cell['title'] = ''; break;
 				default:
+					if (!$settings['check']) break;
 					$output = '<p class="error">FEN nicht gültig</p>';
-					wrap_error(sprintf('FEN nicht gültig: %s', $fen));
+					wrap_error(sprintf('FEN nicht gültig: %s (Symbol %s)', $fen, $field));
 					return $output;
  			}
 			if ($field_count === 0) {
