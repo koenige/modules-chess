@@ -80,6 +80,23 @@ function mod_chess_diagram($params, $settings) {
 
 	$settings['check'] = $settings['check'] ?? true;
 	
+	// mark pieces somehow
+	$mark['white_moves'] = 'x';
+	$mark['black_moves'] = 'y';
+	$mark['mark'] = 'z';
+	$mark['flip'] = '180';
+	$attr = [];
+	foreach ($settings as $setting => $fields) {
+		if (!array_key_exists($setting, $mark)) continue;
+		$fields = explode(',', $fields);
+		foreach ($fields as $field) {
+			$field = strtolower(trim($field));
+			$line = array_search(substr($field, 0, 1), $alphabet); // a-h, might extend to z
+			$row = substr($field, 1); // 1-8, might extend to 99
+			$attr[$row][$line][] = $mark[$setting];
+		}
+	}
+
 	$data['board'] = '';
 	foreach ($lines as $line) {
 		$no = $lines_count - $i;
@@ -111,6 +128,18 @@ function mod_chess_diagram($params, $settings) {
 				case "p": $cell['src'] = "sB"; $cell['alt'] = "b"; $cell['title'] = 'schwarzer Bauer'; break;
 				case "1": $cell['src'] = ""; $cell['alt'] = "."; $cell['title'] = ''; break;
 				default:
+					if (!empty($settings['piece'][strtoupper($field)])) {
+						if (ctype_upper($field)) {
+							$cell['src'] = "w".$field;
+							$cell['alt'] = $field;
+							$cell['title'] = 'weißer '.$settings['piece'][strtoupper($field)];
+						} else {
+							$cell['src'] = "s".$field;
+							$cell['alt'] = $field;
+							$cell['title'] = 'schwarzer '.$settings['piece'][strtoupper($field)];
+						}
+						break;
+					}
 					if (!$settings['check']) break;
 					$output = '<p class="error">FEN nicht gültig</p>';
 					wrap_error(sprintf('FEN nicht gültig: %s (Symbol %s)', $fen, $field));
@@ -123,7 +152,10 @@ function mod_chess_diagram($params, $settings) {
 				$cell['field'] = $field_bottom_right;
 				$field_count = 0;
 			}
-			
+			if (!empty($attr[$no][$j])) {
+				sort($attr[$no][$j]);
+				$cell['attr'] = implode('', $attr[$no][$j]);
+			}			
  			$data['rows'][$no]['cells'][$j] = $cell;
 		}
 		$i++;

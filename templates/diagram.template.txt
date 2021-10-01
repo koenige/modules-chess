@@ -26,7 +26,7 @@
 <tr>
 <th>%%% item no %%%&nbsp;</th>
 %%% loop cells %%%
-<td%%% item class " class='%s'" %%%><img src="/layout/figuren/%%% item src %%%%%% item field %%%.gif" alt="%%% item alt %%%" title="%%% item title %%%" width="30" height="30"></td>
+<td%%% item class " class='%s'" %%%><img src="%%% setting layout_path %%%/figuren/%%% item src %%%%%% item field %%%%%% item attr %%%.gif" alt="%%% item alt %%%" title="%%% item title %%%" width="30" height="30"></td>
 %%% loop end %%%</tr>
 %%% loop end %%%
 </tbody>
