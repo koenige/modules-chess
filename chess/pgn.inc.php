@@ -384,6 +384,8 @@ function mf_chess_pgn_only_comment($moves, $result) {
 	$moves = trim($moves);
 	if (substr($moves, 0, 1) !== '{') return '';
 	if (substr($moves, -1) !== '}') return '';
+	// only comment if first } is last }, too
+	if (strpos($moves, '}') !== strrpos($moves, '}')) return;
 	return substr($moves, 1, -1);
 }
 
