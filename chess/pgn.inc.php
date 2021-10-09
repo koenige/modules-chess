@@ -36,9 +36,6 @@ function mf_chess_pgn_basics() {
  * @return array
  */
 function mf_chess_pgn_find($file, $search) {
-	global $zz_conf;
-	require_once $zz_conf['dir'].'/functions.inc.php';
-	
 	$pgn = [];
 	if (!file_exists($file)) {
 		$pgn['error'] = sprintf('File %s does not exist', $file);
