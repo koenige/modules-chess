@@ -106,7 +106,10 @@ function mf_chess_pgn_parse($pgn, $filename = false) {
 				$i++;
 				continue;
 			}
-			$games[$i]['moves'] .= $line.' ';
+			$games[$i]['moves'] .= $line;
+			// some software breaks inside timestamp (why?)
+			if (!in_array(substr($games[$i]['moves'], -1), [':', '{', ']']))
+				$games[$i]['moves'] .= ' ';
 		}
 	}
 	foreach ($games as $index => $game) {
