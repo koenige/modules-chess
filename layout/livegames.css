@@ -1,0 +1,332 @@
+.boardTable { width:326px; height:326px; border-width:3px; }
+.whiteSquare, .blackSquare { width:40px; height:40px; }
+
+.event, .round, .match, .firstTeam, .secondTeam, .score, .player, .firstPlayer, .secondPlayer, .result, .newMoves, .noNewMoves {
+  white-space: nowrap;
+  display: inline-block;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  vertical-align: bottom;
+}
+
+.eventRound, .matchScore, .game {
+  white-space: nowrap;
+}
+
+.team, .firstTeam, .secondTeam, .firstTeamScore, .secondTeamScore, .firstPlayer, .secondPlayer, .firstTeamPlayer, .secondTeamPlayer {
+  white-space: nowrap;
+}
+
+.eventRound, .event, .match, .firstTeam, .game, .firstPlayer, .secondPlayer, .firstTeamPlayer, .secondTeamPlayer {
+  margin-left: 0px;
+}
+
+.player {
+  width: 180px; /* defined as player.width */
+  margin-right: 20px; /* defined as player.marginRight */
+}
+
+.event, .firstTeam, .secondTeam, .firstPlayer, .secondPlayer {
+  padding-left: 5px; /* defined as player.paddingLeft */
+  padding-right: 5px; /* = player.paddingLeft */
+}
+
+.round, .secondTeam, .score, .newMoves, .noNewMoves {
+  margin-left: 20px; /* defined as player.marginRight */
+}
+
+.event {
+  width: 370px; /* = 2 * player.width + 2 * player.paddingLeft */
+}
+
+.round {
+  width: 100px; /* defined as round.width */
+}
+
+.match {
+  width: 380px; /* = 2 * player.width + 4 * player.paddingLeft */
+}
+
+.score {
+  width: 70px; /* = defined as score.width < round.width */
+}
+
+.result {
+  width: 70px; /* = score.width */
+}
+
+.eventRound {
+  font-size: 20px; /* = 5/4 * body.fontSize */
+  font-weight: normal;
+  margin-top: 48px; /* = 3 * body.fontSize */
+  margin-bottom: 12px; /* = 3/4 * body.fontSize */
+}
+
+.matchScore {
+  font-size: 16px; /* = body.fontSize */
+  font-weight: bold;
+  margin-top: 24px; /* = 3/2 * body.fontSize */
+  margin-bottom: 12px; /* = 3/4 * body.fontSize */
+}
+
+.game {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.secondTeam, .secondTeamPlayer {
+  background-color: #F4F4F4;
+  border-radius: 3px; /* = 1/4 * game.fontSize */
+}
+
+.score, .result {
+  text-align: center;
+}
+
+.newMoves, .noNewMoves {
+  color: gray;
+  font-weight: bold;
+}
+
+.noNewMoves {
+  visibility: hidden;
+}
+
+.gameLiveStatus2 {
+  display: inline-block;
+  margin-top: 48px; /* = 3 * body.fontSize */
+  padding-left: 5px; /* = player.paddingLeft */
+  font-size: 14px; /* defined as game.fontSize */
+  color: gray;
+}
+
+.gameFloatingContainer {
+  float:right;
+  white-space: nowrap;
+}
+
+.whiteSquare,
+.blackSquare,
+.highlightWhiteSquare,
+.highlightBlackSquare {
+  width: 38px; /* defined as whiteSquare.bareWidth */
+  height: 38px; /* = whiteSquare.bareWidth */
+  border-style: solid;
+  border-width: 1px; /* defined as whiteSquare.borderWidth */
+  /* whiteSquare.width = whiteSquare.bareWidth + 2 * whiteSquare.borderWidth */
+}
+
+.boardTable {
+  border-style: solid;
+  border-color: #818780;
+  border-width: 2px; /* defined as boardTable.borderWidth */
+  box-shadow: 0px 0px 20px #B0B8AE;
+  width: 324px; /* = 8 * whiteSquare.width + 2 * boardTable.borderWidth */
+  height: 324px; /* = 8 * whiteSquare.width + 2 * boardTable.borderWidth */
+  background-color: #FFFFFF;
+}
+
+.pieceImage {
+  width: 32px; /* defined as pieceImage.width < whiteSquare.bareWidth */
+  height: 32px; /* = pieceImage.width */
+}
+
+.whiteSquare,
+.highlightWhiteSquare {
+  background: #EFF4EC;
+  border-color: #EFF4EC;
+}
+
+.blackSquare,
+.highlightBlackSquare {
+  background: #C6CEC3;
+  border-color: #C6CEC3;
+}
+
+.highlightWhiteSquare,
+.highlightBlackSquare {
+  border-color: #818780;
+}
+
+.selectControl {
+/* a "width" attribute here must use the !important flag to override default settings */
+  font-size: 16px; /* = body.fontSize */
+}
+
+.optionSelectControl {
+}
+
+.buttonControlPlay,
+.buttonControlStop,
+.buttonControl {
+/* a "width" attribute here must use the !important flag to override default settings */
+  font-size: 16px; /* = body.fontSize */
+  border-style: none;
+  background-color: transparent;
+}
+
+.buttonControlSpace {
+/* a "width" attribute here must use the !important flag to override default settings */
+  font-size: 16px; /* = body.fontSize */
+}
+
+.searchPgnButton {
+/* a "width" attribute here must use the !important flag to override default settings */
+  font-size: 16px; /* = body.fontSize */
+}
+
+.searchPgnExpression {
+/* a "width" attribute here must use the !important flag to override default settings */
+  font-size: 16px; /* = body.fontSize */
+}
+
+.move,
+.variation {
+  text-decoration: none;
+}
+
+.move {
+  color: black;
+}
+
+.comment,
+.variation {
+  color: gray !important;
+}
+
+a.variation {
+  color: gray !important;
+}
+
+.moveOn,
+.variationOn {
+  background: #DAF4D7;
+}
+
+.header, .footer {
+  font-size: 11px; /* defined as header.fontSize */
+  line-height: 1.4em; /* defined as header.lineHeight */
+  white-space: nowrap;
+  margin-left: 2px; /* = boardTable.borderWidth */
+  margin-right: 2px; /* = boardTable.borderWidth */
+  width: 320px; /* = 8 * whiteSquare.width */
+}
+
+.header {
+  margin-bottom: 22px; /* defined as header.marginBottom = 2 * header.fontSize */
+}
+
+.footer {
+  margin-top: 22px; /* = 2 * header.fontSize */
+}
+
+.gameEvent, .gameLiveStatus, .gameWhite, .gameWhiteClock, .gameBlackClock, .gameBlack {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.gameEvent {
+  width: 220px; /* = 5.5 * whiteSquare.width */
+  margin-right: 20px; /* = 1/2 * whiteSquare.width */
+  text-align: left;
+  color: gray;
+}
+
+.gameLiveStatus {
+  width: 80px; /* = 2 * whiteSquare.width */
+  text-align: right;
+  text-decoration: none;
+  color: gray;
+}
+
+.gameWhite, .gameBlack {
+  width: 80px; /* = 2 * whiteSquare.width */
+  text-decoration: none;
+  color: black;
+}
+
+.gameWhiteClock, .gameBlackClock {
+  width: 50px; /* defined as gameWhiteClock.width */
+  margin-left: 15px; /* = 1/2 * (2 * whiteSquare.width - gameWhiteClock.width) */
+  margin-right: 15px; /* = 1/2 * (2 * whiteSquare.width - gameWhiteClock.width) */
+}
+
+.gameWhite, .gameBlackClock {
+  text-align: left;
+}
+
+.gameWhiteClock, .gameBlack {
+  text-align: right;
+}
+
+.gameSideToMove, .gameText, .gameResult {
+  white-space: nowrap;
+  display: inline-block;
+  overflow-x: hidden;
+}
+
+.gameSideToMove, .gameResult {
+  width: 50px; /* = gameWhiteClock.width */
+}
+
+.gameText {
+  width: 220px; /* = 8 * whiteSquare.width - 2 * gameWhiteClock.width */
+  text-align: center;
+}
+
+.gameResult {
+  text-align: right;
+}
+
+.sideToMove {
+  height: 1ex;
+  width: 1ex;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  margin-bottom: 1px;
+}
+
+.sideToMoveHidden {
+  visibility: hidden;
+}
+
+#results {
+  float:left;
+  margin-right: 40px;
+}
+
+
+
+
+
+.team_ergebnis tr.live:hover {
+  cursor: pointer;
+}
+
+.team_ergebnis {
+  /*float:none;*/
+}
+
+.gameBoardContainer {  
+  width: 324px;
+  padding: 10px; /* defined as gameBoardContainer.padding = body.padding - gameFloatingContainer.right */
+  padding-top: 20px; /* defined as gameBoardContainer.paddingTop = 2 * gameBoardContainer.padding */
+  padding-left: 0px;
+  position: fixed;
+  left: 16px;
+  top: 16px;
+}
+
+#full { margin-left: 356px; }
+
+@media screen and (min-width: 1200px) {
+	.team_ergebnis .th, .team_ergebnis .ta
+					{ width: 9em; }
+}
+
+@media screen and (max-width: 640px) {
+	.gameBoardContainer { position: static; margin-top: 1em; margin-left: 1em; }
+	#full { margin-left: 0; }
+}
+
