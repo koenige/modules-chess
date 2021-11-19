@@ -130,11 +130,11 @@ function mod_chess_diagram($params, $settings) {
 				default:
 					if (!empty($settings['piece'][strtoupper($field)])) {
 						if (ctype_upper($field)) {
-							$cell['src'] = "w".$field;
+							$cell['src'] = "w".strtoupper($field);
 							$cell['alt'] = $field;
 							$cell['title'] = 'weißer '.$settings['piece'][strtoupper($field)];
 						} else {
-							$cell['src'] = "s".$field;
+							$cell['src'] = "s".strtoupper($field);
 							$cell['alt'] = $field;
 							$cell['title'] = 'schwarzer '.$settings['piece'][strtoupper($field)];
 						}
