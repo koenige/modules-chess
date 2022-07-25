@@ -347,36 +347,6 @@ function mf_chess_pgn_to_html($pgn, $extra_comment = []) {
 }
 
 /**
- * Liest PGN-Datei(en) aus Tabelle aus, holt sich den Inhalt und gibt alle
- * PGNs zurück
- *
- * @param int $tournament_id
- * @return string
- * @global array $zz_conf
- */
-function mf_chess_pgn_file_from_tournament($tournament_id) {
-	global $zz_conf;
-
-	$sql = 'SELECT partien_pfad
-		FROM turniere_partien
-		WHERE tournament_id = %d';
-	$sql = sprintf($sql, $tournament_id);
-	$pgn_pfade = wrap_db_fetch($sql, '_dummy_', 'single value');
-	$pgn = '';
-	foreach ($pgn_pfade as $pfad) {
-		if (in_array(substr($pfad, 0, 1), ['/', '.'])) {
-			// lokaler Pfad
-			$pfad = $zz_conf['root'].$pfad;
-			if (!file_exists($pfad)) continue;
-		}
-		if ($dateininhalt = file_get_contents($pfad)) {
-			$pgn .= $dateininhalt;
-		}
-	}
-	return $pgn;
-}
-
-/**
  * check if PGN only is a comment
  *
  * @param string $moves
