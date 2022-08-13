@@ -5,7 +5,7 @@
 # https://www.zugzwang.org/modules/chess
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2014, 2017-2021 Gustaf Mossakowski
+# @copyright Copyright © 2014, 2017-2022 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 %%% loop start %%%
@@ -27,8 +27,12 @@
 %%% condition if BlackTitle %%%
 [BlackTitle "%%% item BlackTitle %%%"]
 %%% condition endif %%%
+%%% condition if WhiteElo %%%
 [WhiteElo "%%% item WhiteElo %%%"]
+%%% condition endif %%%
+%%% condition if BlackElo %%%
 [BlackElo "%%% item BlackElo %%%"]
+%%% condition endif %%%
 %%% condition if WhiteClock %%%
 [WhiteClock "%%% item WhiteClock %%%"]
 %%% condition endif %%%
