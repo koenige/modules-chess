@@ -9,7 +9,7 @@
  * http://www.zugzwang.org/modules/chess
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2021 Gustaf Mossakowski
+ * @copyright Copyright © 2021-2022 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -97,7 +97,7 @@ function mf_chess_pgn_parse($pgn, $filename = false) {
 					, $line_no, $line, $filename ? $filename : 'unknown'
 				));
 			} else {
-				$games[$i]['head'][$matches[1]] = utf8_encode($matches[2]);
+				$games[$i]['head'][$matches[1]] = mb_convert_encoding($matches[2], 'UTF-8', 'ISO-8859-1');
 			}
 			$games[$i]['moves'] = '';
 		} else {
@@ -113,7 +113,7 @@ function mf_chess_pgn_parse($pgn, $filename = false) {
 		}
 	}
 	foreach ($games as $index => $game) {
-		$games[$index]['moves'] = utf8_encode(wrap_convert_string($game['moves'], 'iso-8859-1'));
+		$games[$index]['moves'] = mb_convert_encoding(wrap_convert_string($game['moves'], 'iso-8859-1'), 'UTF-8', 'ISO-8859-1');
 		// ChessBase adds some strings …
 		$games[$index]['moves'] = str_replace('] normal}', ']}', $games[$index]['moves']);
 		$games[$index]['head'] = wrap_convert_string($games[$index]['head'], 'iso-8859-1');
