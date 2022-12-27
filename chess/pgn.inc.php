@@ -97,7 +97,9 @@ function mf_chess_pgn_parse($pgn, $filename = false) {
 					, $line_no, $line, $filename ? $filename : 'unknown'
 				));
 			} else {
-				$games[$i]['head'][$matches[1]] = mb_convert_encoding($matches[2], 'UTF-8', 'ISO-8859-1');
+				if (mb_detect_encoding($matches[2]) !== 'UTF-8')
+					$matches[2] = mb_convert_encoding($matches[2], 'UTF-8', 'ISO-8859-1');
+				$games[$i]['head'][$matches[1]] = $matches[2];
 			}
 			$games[$i]['moves'] = '';
 		} else {
@@ -116,7 +118,6 @@ function mf_chess_pgn_parse($pgn, $filename = false) {
 		$games[$index]['moves'] = mb_convert_encoding(wrap_convert_string($game['moves'], 'iso-8859-1'), 'UTF-8', 'ISO-8859-1');
 		// ChessBase adds some strings …
 		$games[$index]['moves'] = str_replace('] normal}', ']}', $games[$index]['moves']);
-		$games[$index]['head'] = wrap_convert_string($games[$index]['head'], 'iso-8859-1');
 		$games[$index]['head'] = wrap_convert_string($games[$index]['head'], 'utf-8');
 	}
 	
