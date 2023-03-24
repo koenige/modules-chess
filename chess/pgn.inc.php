@@ -9,7 +9,7 @@
  * http://www.zugzwang.org/modules/chess
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2021-2022 Gustaf Mossakowski
+ * @copyright Copyright © 2021-2023 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -248,7 +248,6 @@ function mf_chess_pgn_translate_pieces($move, $language) {
  *		string 'pgn'
  */
 function mf_chess_pgn_to_html($pgn, $extra_comment = []) {
-	global $zz_setting;
 	// do some cleanup
 	if (empty($pgn['moves'])) {
 		$game = ['bool' => '*', 'move' => 0, 'html' => '', 'pgn' => ''];
@@ -319,10 +318,7 @@ function mf_chess_pgn_to_html($pgn, $extra_comment = []) {
 				$game['html'] .= $move.' ';
 			}
 		} elseif (substr($move, 0, 1) === '$') {
-			if (!isset($nag)) {
-				require_once $zz_setting['modules_dir'].'/chess/chess/pgn.inc.php';
-				$nag = mf_chess_pgn_basics();
-			}
+			if (!isset($nag)) $nag = mf_chess_pgn_basics();
 			if (substr($game['html'], -1) === ' ')
 				$game['html'] = substr($game['html'], 0, -1);
 			$game['html'] .= $nag['NAG'][substr($move, 1)]['CSM'].' ';
