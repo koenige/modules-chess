@@ -118,7 +118,10 @@ function mf_chess_pgn_parse($pgn, $filename = false) {
 		$games[$index]['moves'] = mb_convert_encoding(wrap_convert_string($game['moves'], 'iso-8859-1'), 'UTF-8', 'ISO-8859-1');
 		// ChessBase adds some strings …
 		$games[$index]['moves'] = str_replace('] normal}', ']}', $games[$index]['moves']);
-		$games[$index]['head'] = wrap_convert_string($games[$index]['head'], 'utf-8');
+		if (empty($games[$index]['head']))
+			$games[$index]['head'] = '';
+		else
+			$games[$index]['head'] = wrap_convert_string($games[$index]['head'], 'utf-8');
 	}
 	
 	return $games;
