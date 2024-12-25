@@ -5,15 +5,15 @@
 # http://www.zugzwang.org/modules/chess
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2015, 2021 Gustaf Mossakowski
+# @copyright Copyright © 2015, 2021, 2024 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <table summary="Stellung auf Schachbrett" class="brett">
-%%% condition if white_to_move %%%
-<caption align="bottom" class="amzug">%%% condition if caption %%%%%% item caption %%%%%% condition else %%%Weiß am Zug%%% condition endif %%%</caption>
-%%% condition elseif black_to_move %%%
-<caption align="top" class="amzug">%%% condition if caption %%%%%% item caption %%%%%% condition else %%%Schwarz am Zug%%% condition endif %%%</caption>
-%%% condition endif %%%
+%%% if white_to_move %%%
+<caption align="bottom" class="amzug">%%% if caption %%%%%% item caption %%%%%% else %%%Weiß am Zug%%% endif %%%</caption>
+%%% elseif black_to_move %%%
+<caption align="top" class="amzug">%%% if caption %%%%%% item caption %%%%%% else %%%Schwarz am Zug%%% endif %%%</caption>
+%%% endif %%%
 <tfoot>
 <tr><td>&nbsp;&nbsp;</td>
 %%% loop letters %%%

@@ -5,7 +5,7 @@
 # https://www.zugzwang.org/modules/chess
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2014, 2017-2022 Gustaf Mossakowski
+# @copyright Copyright © 2014, 2017-2022, 2024 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 %%% loop start %%%
@@ -13,96 +13,96 @@
 [Site "%%% item Site %%%%%% item EventCountry " %s" %%%"]
 [Date "%%% item Date %%%"]
 [Round "%%% item Round %%%"]
-%%% condition unless vertauschte_farben %%%
+%%% unless vertauschte_farben %%%
 [White "%%% item White %%%"]
 [Black "%%% item Black %%%"]
 [Result "%%% item Result %%%"]
-%%% condition if Termination %%%
+%%% if Termination %%%
 [Termination "%%% item Termination %%%"]
-%%% condition endif %%%
+%%% endif %%%
 [Board "%%% item Table "%d." %%%%%% item Board %%%"]
-%%% condition if WhiteTitle %%%
+%%% if WhiteTitle %%%
 [WhiteTitle "%%% item WhiteTitle %%%"]
-%%% condition endif %%%
-%%% condition if BlackTitle %%%
+%%% endif %%%
+%%% if BlackTitle %%%
 [BlackTitle "%%% item BlackTitle %%%"]
-%%% condition endif %%%
-%%% condition if WhiteElo %%%
+%%% endif %%%
+%%% if WhiteElo %%%
 [WhiteElo "%%% item WhiteElo %%%"]
-%%% condition endif %%%
-%%% condition if BlackElo %%%
+%%% endif %%%
+%%% if BlackElo %%%
 [BlackElo "%%% item BlackElo %%%"]
-%%% condition endif %%%
-%%% condition if WhiteClock %%%
+%%% endif %%%
+%%% if WhiteClock %%%
 [WhiteClock "%%% item WhiteClock %%%"]
-%%% condition endif %%%
-%%% condition if BlackClock %%%
+%%% endif %%%
+%%% if BlackClock %%%
 [BlackClock "%%% item BlackClock %%%"]
-%%% condition endif %%%
-%%% condition if WhiteTeam %%%
+%%% endif %%%
+%%% if WhiteTeam %%%
 [WhiteTeam "%%% item WhiteTeam %%%"]
 %%% comment [WhiteTeamCountry "GER"] %%%
-%%% condition endif %%%
-%%% condition if BlackTeam %%%
+%%% endif %%%
+%%% if BlackTeam %%%
 [BlackTeam "%%% item BlackTeam %%%"]
 %%% comment [BlackTeamCountry "GER"] %%%
-%%% condition endif %%%
-%%% condition else %%%
+%%% endif %%%
+%%% else %%%
 [White "%%% item Black %%%"]
 [Black "%%% item White %%%"]
 [Result "%%% item Result_vertauscht %%%"]
-%%% condition if Termination %%%
+%%% if Termination %%%
 [Termination "%%% item Termination %%%"]
-%%% condition endif %%%
+%%% endif %%%
 [Board "%%% item Table "%d." %%%%%% item Board %%%"]
-%%% condition if BlackTitle %%%
+%%% if BlackTitle %%%
 [WhiteTitle "%%% item BlackTitle %%%"]
-%%% condition endif %%%
-%%% condition if WhiteTitle %%%
+%%% endif %%%
+%%% if WhiteTitle %%%
 [BlackTitle "%%% item WhiteTitle %%%"]
-%%% condition endif %%%
+%%% endif %%%
 [WhiteElo "%%% item BlackElo %%%"]
 [BlackElo "%%% item WhiteElo %%%"]
-%%% condition if BlackClock %%%
+%%% if BlackClock %%%
 [WhiteClock "%%% item BlackClock %%%"]
-%%% condition endif %%%
-%%% condition if WhiteClock %%%
+%%% endif %%%
+%%% if WhiteClock %%%
 [BlackClock "%%% item WhiteClock %%%"]
-%%% condition endif %%%
-%%% condition if BlackTeam %%%
+%%% endif %%%
+%%% if BlackTeam %%%
 [WhiteTeam "%%% item BlackTeam %%%"]
-%%% condition endif %%%
-%%% condition if WhiteTeam %%%
+%%% endif %%%
+%%% if WhiteTeam %%%
 [BlackTeam "%%% item WhiteTeam %%%"]
-%%% condition endif %%%
-%%% condition endif %%%
-%%% condition if ECO %%%
+%%% endif %%%
+%%% endif %%%
+%%% if ECO %%%
 [ECO "%%% item ECO %%%"]
-%%% condition endif %%%
-%%% condition if PlyCount %%%
+%%% endif %%%
+%%% if PlyCount %%%
 [PlyCount "%%% item PlyCount %%%"]
-%%% condition endif %%%
-%%% condition if WhiteFideId %%%
+%%% endif %%%
+%%% if WhiteFideId %%%
 [WhiteFideId "%%% item WhiteFideId %%%"]
-%%% condition endif %%%
-%%% condition if BlackFideId %%%
+%%% endif %%%
+%%% if BlackFideId %%%
 [BlackFideId "%%% item BlackFideId %%%"]
-%%% condition endif %%%
-%%% condition if EventCountry %%%
+%%% endif %%%
+%%% if EventCountry %%%
 [EventCountry "%%% item EventCountry %%%"]
-%%% condition endif %%%
-%%% condition if EventRounds %%%
+%%% endif %%%
+%%% if EventRounds %%%
 [EventRounds "%%% item EventRounds %%%"]
-%%% condition endif %%%
-%%% condition if EventType %%%
+%%% endif %%%
+%%% if EventType %%%
 [EventType "%%% item EventType %%%"]
-%%% condition endif %%%
+%%% endif %%%
 [EventDate "%%% item EventDate %%%"]
 
-%%% condition if moves %%%
+%%% if moves %%%
 %%% item moves pgn_wordwrap %%%
-%%% condition else %%%
+%%% else %%%
 * 
-%%% condition endif %%%
+%%% endif %%%
 
 %%% loop end %%%
