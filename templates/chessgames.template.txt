@@ -10,13 +10,17 @@
 #
 %%% loop start %%%
 <ul class="partie">
-<li class="white">%%% item White %%%%%% if WhiteElo %%% (%%% item WhiteElo %%%)%%% endif %%%</li>
-<li class="black">%%% item Black %%%%%% if BlackElo %%% (%%% item BlackElo %%%)%%% endif %%%</li>
-<li>%%% item Event %%% %%% item Site %%%%%% item Date pgn_date_localized ", %s" %%%
+<li class="white">%%% item White pgn_name %%%
+%%% if WhiteElo | WhiteTeam %%% (%%% item WhiteTeam %%%%%% if WhiteElo & WhiteTeam %%%, %%% endif %%%%%% item WhiteElo %%%)%%% endif %%%</li>
+<li class="black">%%% item Black pgn_name %%%
+%%% if BlackElo | BlackTeam %%% (%%% item BlackTeam %%%%%% if BlackElo & BlackTeam %%%, %%% endif %%%%%% item BlackElo %%%)%%% endif %%%</li>
+<li>%%% item Event %%% %%% item Site %%%
+%%% if Round %%%, %%% item Round %%%. Runde%%% endif %%%
+%%% item Date pgn_date_localized ", %s" %%%
 %%% if ECO | Annotator %%%
 <li>%%% if ECO %%%ECO %%% item ECO %%%%%% endif %%%
 %%% if ECO & Annotator %%%, %%% endif %%%
-%%% if Annotator %%%Anmerkungen: %%% item Annotator %%%%%% endif %%%
+%%% if Annotator %%%Anmerkungen: %%% item Annotator pgn_name %%%%%% endif %%%
 %%% endif %%%
 %%% if diagram %%%
 <li>%%% item diagram %%%</li>

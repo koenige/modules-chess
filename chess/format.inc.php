@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/chess
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2021 Gustaf Mossakowski
+ * @copyright Copyright © 2021, 2026 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -43,4 +43,17 @@ function mf_chess_pgn_date($date) {
  */
 function mf_chess_pgn_date_localized($date) {
 	return wrap_date(mf_chess_pgn_date($date));
+}
+
+/**
+ * format a name of a player
+ *
+ * @param string $name
+ * @return string
+ */
+function mf_chess_pgn_name($name) {
+	if (!wrap_setting('chess_pgn_name_first_last')) return $name;
+	$name = explode(',', $name);
+	$name = trim(implode(' ', array_reverse($name)));
+	return $name;
 }
