@@ -208,7 +208,7 @@ function mf_chess_pgn_remove_double_emptylines($pgn) {
  */
 function mf_chess_pgn_translate_pieces($move, $language) {
 	$piece = substr($move, 0, 1);
-	if (in_array($piece, ['K', 'Q', 'R', 'B', 'N']))
+	if (in_array($piece, wrap_setting('chess_pgn_pieces')))
 		$piece = wrap_text($piece, ['context' => 'piece']);
 	return $piece.substr($move, 1, strlen($move));
 }
