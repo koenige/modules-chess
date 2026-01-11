@@ -2,7 +2,7 @@
 
 /**
  * chess module
- * show a PGN game
+ * parse a PGN game
  * PGN = Portable Game Notation for chess games
  *
  * Part of »Zugzwang Project«
@@ -81,83 +81,6 @@ DM Schnellschach Höckendorf, 16.04.2004
 1. d4 d5 
 
 */
-
-/**
- * show a single PGN game from a file
- *
- * @param string $file path of file
- * @param mixed $nos
- * @return string
- */
-function show_pgn_game($file, $nos) {
-	wrap_include('pgn', 'chess');
-	
-	$filename = sprintf('%s/%s', wrap_setting('root_dir'), $file);
-	if (!file_exists($filename)) return ''; // @todo Error!
-
-	$pgn_file = file($filename);
-	$games = mf_chess_pgn_parse($pgn_file, $filename);
-	foreach (array_keys($games) as $index)
-		$games[$index]['moves_p'] = parse_movetext($games[$index]['moves']);
-
-	if (!is_array($nos)) $nos = [$nos];
-	$data = [];
-	$index = 0;
-	foreach ($nos as $no) {
-		$data[$index] = $games[$no]['head'];
-		$data[$index]['no'] = $no + 1;
-		if (isset($data[$index]['FEN']))
-			$data[$index]['diagram'] = brick(['request', 'diagram', $data[$index]['FEN']]);
-		$data[$index]['moves'] = print_moves($games[$no]['moves_p'], 0);
-		$data[$index]['path'] = $file;
-		$index++;
-	}
-	return wrap_template('chessgames', $data);
-}
-
-function print_moves($game_moves, $level) {
-	$output = '';
-	$output.= '<dl><dt>';
-	$space = ' ';
-	$i = 0;
-	if ($level > 1) {
-		$output.= '(';
-		$space = '';
-	}
-	$dotmov = false;
-	if ($level) $dotmov = true;
-	foreach ($game_moves as $move_num => $moves) {
-		foreach (array_keys($moves) as $key) {
-			if ($key == 'white') {
-				$output.= ' '.$move_num.'.';
-				$dotmov = false;
-				$there_are_moves = true; // es wurden zuege ausgegeben
-			}
-			if (strstr($key, 'comment')) {
-				$output.= '</dt>'."\n".'<dd';
-				if (!$move_num && !$level) $output.= ' class="first"';
-				$output.= '>'.$moves[$key].' </dd>'."\n".'<dt>';
-				$dotmov = true;
-			} elseif (strstr($key, 'variant')) {
-				$output.= '</dt>'."\n".'<dd';
-				if (!$move_num) $output.= ' class="first"';
-				$output.= '>';
-				$output.= print_moves($moves[$key], $level+1).' </dd>'."\n".'<dt>';
-				$dotmov = true;
-			} elseif (strstr($key, 'NAG')) {
-				$output.= show_nag($moves[$key]);
-			} else {
-				if ($dotmov OR (!$i && empty($there_are_moves))) $output.= $move_num.'... ';
-				$output.= $space.mf_chess_pgn_translate_pieces($moves[$key], 'de');
-				$space = ' ';
-			}
-			$i++;
-		}
-	}
-	if ($level > 1) $output.= ')';
-	$output.= '</dt></dl>';
-	return $output;
-}
 
 function show_nag($my_nag) {
 	static $pgn = [];
