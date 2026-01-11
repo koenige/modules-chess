@@ -14,8 +14,6 @@
  */
 
 
-require_once wrap_setting('modules_dir').'/chess/chess/pgn.inc.php';
-
 /*
 
 	http://search.cpan.org/~gmax/Chess-PGN-Parse/Parse.pm
@@ -84,20 +82,13 @@ DM Schnellschach Höckendorf, 16.04.2004
 
 */
 
-function show_pgn($file, $seq) {
-	// fuer abwaertskompatibilitaet
-	global $games;
-	global $comments;
-	global $variants;
-	global $pgn;
-	echo show_pgn_game($file, $seq);
-}
-
 function show_pgn_game($file, $seq) {
 	global $games;
 	global $comments;
 	global $variants;
 	global $pgn;
+	wrap_include('pgn', 'chess');
+
 	$output = '';
 	$pgn = mf_chess_pgn_basics();
 	if (!file_exists($_SERVER['DOCUMENT_ROOT'].$file)) return false; // @todo Error!
@@ -225,9 +216,6 @@ function parse_movetext($movetext) {
 	global $pgn;
 	global $variants;
 	global $comments;
-	//global $comments;
-	//echo 'restart <br>';
-	//global $variants;
 	$moves = '';
 	if (is_array($movetext)) 
 		foreach ($movetext as $move)
@@ -241,10 +229,6 @@ function parse_movetext($movetext) {
 		if ($comments)
 			foreach ($comments as $key => $tree)
 				$moves = str_replace('{'.$tree.'}', 'comment'.$key, $moves);
-	/*	echo '<pre>';
-		print_r($comments);
-		echo '</pre>';
-*/
 	}
 	if ($comments) $comments = parse_comments($comments);
 	if (!$variants) {
@@ -261,11 +245,6 @@ function parse_movetext($movetext) {
 			$marker++;
 			if ($marker == 10) break;
 		}
-/*
-		echo '<pre>';
-		print_r($variants);
-		echo '</pre>';
-*/
 	}
 
 	$moveparts = explode(' ', $moves);
@@ -295,12 +274,9 @@ function parse_movetext($movetext) {
 				$com_index++;
 				$move_a[$movenum][$color] = $comments[$i];
 			} elseif (substr($movepart,0,7) == 'variant') {
-				//echo '<br>test';
 				$j = substr($movepart,7);
-				//echo 'test';
 				$color = 'variant'.$var_index;
 				$var_index++;
-				//echo $variants[$j];
 				$move_a[$movenum][$color] = parse_movetext($variants[$j]);
 			} else {
 				if (!isset($move_a[$movenum]))
