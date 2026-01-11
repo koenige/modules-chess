@@ -208,18 +208,8 @@ function mf_chess_pgn_remove_double_emptylines($pgn) {
  */
 function mf_chess_pgn_translate_pieces($move, $language) {
 	$piece = substr($move, 0, 1);
-	switch ($language) {
-	case 'en':
-		break;
-	case 'de':
-		switch ($piece) {
-			case 'Q': $piece = 'D'; break;
-			case 'B': $piece = 'L'; break;
-			case 'R': $piece = 'T'; break;
-			case 'N': $piece = 'S'; break;
-		}
-		break;
-	}
+	if (in_array($piece, ['K', 'Q', 'R', 'B', 'N']))
+		$piece = wrap_text($piece, ['context' => 'piece']);
 	return $piece.substr($move, 1, strlen($move));
 }
 
