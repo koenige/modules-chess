@@ -82,26 +82,29 @@ DM Schnellschach Höckendorf, 16.04.2004
 
 */
 
-function show_pgn_game($file, $seq) {
+/**
+ * show a single PGN game from a file
+ *
+ * @param string $file path of file
+ * @param mixed $nos
+ * @return string
+ */
+function show_pgn_game($file, $nos) {
 	wrap_include('pgn', 'chess');
+	
+	$filename = sprintf('%s/%s', wrap_setting('root_dir'), $file);
+	if (!file_exists($filename)) return ''; // @todo Error!
+
+	$pgn_file = file($filename);
+	$games = mf_chess_pgn_parse($pgn_file, $filename);
+	foreach (array_keys($games) as $index)
+		$games[$index]['moves_p'] = parse_movetext($games[$index]['moves']);
 
 	$output = '';
-	if (!file_exists($_SERVER['DOCUMENT_ROOT'].$file)) return false; // @todo Error!
-
-	$pgn_file = file($_SERVER['DOCUMENT_ROOT'].$file);
-	$games = mf_chess_pgn_parse($pgn_file, $_SERVER['DOCUMENT_ROOT'].$file);
-
-	foreach (array_keys($games) as $masterkey) {
-		$games[$masterkey]['moves_p'] = parse_movetext($games[$masterkey]['moves']);
-	}
-	if (is_array($seq)) {
-		foreach ($seq as $seq_one) {
-			$output.= print_game($games, $seq_one);
-			$output.= '<p class="pgn"><a href="'.$file.'">Partie im PGN-Format</a></p>';
-		}
-	} else {
-		$output.= print_game($games, $seq);
-		$output.= '<p class="pgn"><a href="'.$file.'">Partie im PGN-Format</a></p>';
+	if (!is_array($nos)) $nos = [$nos];
+	foreach ($nos as $no) {
+		$output .= print_game($games, $no);
+		$output .= '<p class="pgn"><a href="'.$file.'">Partie im PGN-Format</a></p>';
 	}
 	return $output;
 }
