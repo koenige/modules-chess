@@ -102,37 +102,16 @@ function show_pgn_game($file, $nos) {
 
 	if (!is_array($nos)) $nos = [$nos];
 	$data = [];
+	$index = 0;
 	foreach ($nos as $no) {
-		$data[] = [
-			'html' => print_game($games, $no),
-			'path' => $file
-		];
+		$data[$index] = $games[$no]['head'];
+		if (isset($data[$index]['FEN']))
+			$data[$index]['diagram'] = brick(['request', 'diagram', $data[$index]['FEN']]);
+		$data[$index]['moves'] = print_moves($games[$no]['moves_p'], 0);
+		$data[$index]['path'] = $file;
+		$index++;
 	}
 	return wrap_template('chessgames', $data);
-}
-
-function print_game($games, $seq) {
-	$output = '';
-	$output.= '<ul class="partie">';
-	$output.= '<li class="white">'.$games[$seq]['head']['White'];
-	if (isset($games[$seq]['head']['WhiteElo'])) $output.= ' ('.$games[$seq]['head']['WhiteElo'].')';
-	$output.= '<li class="black">'.$games[$seq]['head']['Black'];
-	if (isset($games[$seq]['head']['BlackElo'])) $output.= ' ('.$games[$seq]['head']['BlackElo'].')';
-	$output.= '<li>'.$games[$seq]['head']['Event'].' '.$games[$seq]['head']['Site'];
-	$date = parse_date($games[$seq]['head']['Date']);
-	if ($date) $output.= ', '.$date;
-	if (isset($games[$seq]['head']['ECO'])) $output.= '<li>ECO '.$games[$seq]['head']['ECO'];
-	if (isset($games[$seq]['head']['Annotator'])) $output.= ', Anmerkungen: '.$games[$seq]['head']['Annotator'];
-	if (isset($games[$seq]['head']['FEN'])) {
-		$diagram = brick_format('%%% request diagram '.$games[$seq]['head']['FEN'].' %%%');
-		$output.= '<li>'.$diagram['text'];
-	}
-	$output.= '<li>';
-	$output.= print_moves($games[$seq]['moves_p'], 0);
-	$output.= '<strong>'.$games[$seq]['head']['Result'].'</strong>';
-	$output.= '</li>'."\n";
-	$output.= '</ul>';
-	return $output;
 }
 
 function print_moves($game_moves, $level) {
@@ -185,15 +164,6 @@ function show_nag($my_nag) {
 	
 	$my_nag = substr($my_nag, 1); // strip $
 	return $pgn['NAG'][$my_nag]['CSM'].' ';
-}
-
-function parse_date($date) {
-	$mydate = explode('.', $date);
-	$date = '';
-	if ($mydate[2] != '??') $date .= $mydate[2].'.';
-	if ($mydate[1] != '??') $date .= $mydate[1].'.';
-	if ($mydate[0] != '????') $date .= $mydate[0];
-	return $date;
 }
 
 function parse_comments($comments) {

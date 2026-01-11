@@ -9,7 +9,21 @@
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 %%% loop start %%%
-%%% item html %%%
+<ul class="partie">
+<li class="white">%%% item White %%%%%% if WhiteElo %%% (%%% item WhiteElo %%%)%%% endif %%%</li>
+<li class="black">%%% item Black %%%%%% if BlackElo %%% (%%% item BlackElo %%%)%%% endif %%%</li>
+<li>%%% item Event %%% %%% item Site %%%%%% item Date pgn_date_localized ", %s" %%%
+%%% if ECO | Annotator %%%
+<li>%%% if ECO %%%ECO %%% item ECO %%%%%% endif %%%
+%%% if ECO & Annotator %%%, %%% endif %%%
+%%% if Annotator %%%Anmerkungen: %%% item Annotator %%%%%% endif %%%
+%%% endif %%%
+%%% if diagram %%%
+<li>%%% item diagram %%%</li>
+%%% endif %%%
+<li>%%% item moves %%% <strong>%%% item Result %%%</strong></li>
+</ul>
+
 <p class="pgn"><a href="%%% item path %%%">Partie im PGN-Format</a></p>
 
 %%% loop end %%%
