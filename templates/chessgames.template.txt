@@ -9,7 +9,7 @@
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 %%% loop start %%%
-<ul class="partie">
+<ul class="partie" id="%%% setting chess_pgn_id_prefix %%%%%% item no %%%">
 <li class="white">%%% item White pgn_name %%%
 %%% if WhiteElo | WhiteTeam %%% (%%% item WhiteTeam %%%%%% if WhiteElo & WhiteTeam %%%, %%% endif %%%%%% item WhiteElo %%%)%%% endif %%%</li>
 <li class="black">%%% item Black pgn_name %%%

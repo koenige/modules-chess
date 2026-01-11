@@ -105,6 +105,7 @@ function show_pgn_game($file, $nos) {
 	$index = 0;
 	foreach ($nos as $no) {
 		$data[$index] = $games[$no]['head'];
+		$data[$index]['no'] = $no + 1;
 		if (isset($data[$index]['FEN']))
 			$data[$index]['diagram'] = brick(['request', 'diagram', $data[$index]['FEN']]);
 		$data[$index]['moves'] = print_moves($games[$no]['moves_p'], 0);
