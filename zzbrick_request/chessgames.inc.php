@@ -39,7 +39,7 @@ function mf_chess_chessgames($params) {
 	$pgn_file = file($filename);
 	$games = mf_chess_pgn_parse($pgn_file, $filename);
 	foreach (array_keys($games) as $index)
-		$games[$index]['moves_p'] = parse_movetext($games[$index]['moves']);
+		$games[$index]['moves_p'] = mf_chess_pgnparse_moves($games[$index]['moves']);
 
 	$data = [];
 	$index = 0;
@@ -86,7 +86,7 @@ function print_moves($game_moves, $level) {
 				$output.= print_moves($moves[$key], $level+1).' </dd>'."\n".'<dt>';
 				$dotmov = true;
 			} elseif (strstr($key, 'NAG')) {
-				$output.= show_nag($moves[$key]);
+				$output.= mf_chess_pgnparse_nag($moves[$key]);
 			} else {
 				if ($dotmov OR (!$i && empty($there_are_moves))) $output.= $move_num.'... ';
 				$output.= $space.mf_chess_pgn_translate_pieces($moves[$key], 'de');

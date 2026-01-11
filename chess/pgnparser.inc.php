@@ -82,7 +82,7 @@ DM Schnellschach Höckendorf, 16.04.2004
 
 */
 
-function show_nag($my_nag) {
+function mf_chess_pgnparse_nag($my_nag) {
 	static $pgn = [];
 	if (!$pgn) $pgn = mf_chess_pgn_basics();
 	
@@ -90,7 +90,7 @@ function show_nag($my_nag) {
 	return $pgn['NAG'][$my_nag]['CSM'].' ';
 }
 
-function parse_comments($comments) {
+function mf_chess_pgnparse_comments($comments) {
 	foreach (array_keys($comments) as $key) {
 		if (substr($comments[$key],0,5) == '# FEN') {
 			preg_match('/# FEN "(.+?)"/', $comments[$key], $board);
@@ -103,7 +103,7 @@ function parse_comments($comments) {
 	return $comments;
 }
 
-function parse_movetext($movetext, $comments = [], $variants = []) {
+function mf_chess_pgnparse_moves($movetext, $comments = [], $variants = []) {
 	static $pgn = [];
 	if (!$pgn) $pgn = mf_chess_pgn_basics();
 
@@ -121,7 +121,7 @@ function parse_movetext($movetext, $comments = [], $variants = []) {
 			foreach ($comments as $key => $tree)
 				$moves = str_replace('{'.$tree.'}', 'comment'.$key, $moves);
 	}
-	if ($comments) $comments = parse_comments($comments);
+	if ($comments) $comments = mf_chess_pgnparse_comments($comments);
 	if (!$variants) {
 		$variant_tree[1] = true;
 		$marker = 0;
@@ -140,7 +140,7 @@ function parse_movetext($movetext, $comments = [], $variants = []) {
 
 	$moveparts = explode(' ', $moves);
 	$movenum = false;
-	//$variants = parse_comments($variants[1]);
+	//$variants = mf_chess_pgnparse_comments($variants[1]);
 	$nag_index = 0;
 	$var_index = 0;
 	$com_index = 0;
@@ -168,7 +168,7 @@ function parse_movetext($movetext, $comments = [], $variants = []) {
 				$j = substr($movepart,7);
 				$color = 'variant'.$var_index;
 				$var_index++;
-				$move_a[$movenum][$color] = parse_movetext($variants[$j], $comments, $variants);
+				$move_a[$movenum][$color] = mf_chess_pgnparse_moves($variants[$j], $comments, $variants);
 			} else {
 				if (!isset($move_a[$movenum]))
 					if (!$movenum) $color = 'comment'.$com_index;
