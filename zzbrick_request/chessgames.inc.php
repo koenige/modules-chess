@@ -86,7 +86,7 @@ function print_moves($game_moves, $level) {
 				$output.= print_moves($moves[$key], $level+1).' </dd>'."\n".'<dt>';
 				$dotmov = true;
 			} elseif (strstr($key, 'NAG')) {
-				$output.= mf_chess_pgnparse_nag($moves[$key]);
+				$output .= mf_chess_pgn_nag($moves[$key]).' ';
 			} else {
 				if ($dotmov OR (!$i && empty($there_are_moves))) $output.= $move_num.'... ';
 				$output.= $space.mf_chess_pgn_translate_pieces($moves[$key], 'de');

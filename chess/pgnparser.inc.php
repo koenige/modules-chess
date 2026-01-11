@@ -82,14 +82,6 @@ DM Schnellschach Höckendorf, 16.04.2004
 
 */
 
-function mf_chess_pgnparse_nag($my_nag) {
-	static $pgn = [];
-	if (!$pgn) $pgn = mf_chess_pgn_basics();
-	
-	$my_nag = substr($my_nag, 1); // strip $
-	return $pgn['NAG'][$my_nag]['CSM'].' ';
-}
-
 function mf_chess_pgnparse_comments($comments) {
 	foreach (array_keys($comments) as $key) {
 		if (substr($comments[$key],0,5) == '# FEN') {

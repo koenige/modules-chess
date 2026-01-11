@@ -46,6 +46,21 @@ function mf_chess_pgn_date_localized($date) {
 }
 
 /**
+ * convert a Numeric Annotation Glyph (NAG) into a symbol
+ *
+ * @param string $nag
+ * @return string
+ */
+function mf_chess_pgn_nag($nag) {
+	static $definitions = [];
+	if (!$definitions)
+		$definitions = wrap_tsv_parse('NAG', 'chess');
+	
+	$key = substr($nag, 1); // strip $
+	return $definitions[$key]['CSM'] ?? $nag;
+}
+
+/**
  * format a name of a player
  *
  * @param string $name

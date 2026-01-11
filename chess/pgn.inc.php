@@ -15,15 +15,6 @@
 
 
 function mf_chess_pgn_basics() {
-	$NAGs = file(__DIR__.'/../configuration/NAG.txt');
-	$i = 0;
-	foreach ($NAGs as $line) {
-		$line = explode("\t", $line);
-		$pgn['NAG'][$line[0]]['CSM'] = $line[1]; 
-		$pgn['NAG'][$line[0]]['Symbol'] = $line[2]; 
-		$pgn['NAG'][$line[0]]['Group'] = $line[3]; 
-		//$pgn['NAG'][$line[0]]['Description'] = $line[4]; 
-	}
 	$pgn['game_endings'] = ['1-0', '0-1', '1/2-1/2', '*'];
 	return $pgn;
 }
@@ -251,6 +242,8 @@ function mf_chess_pgn_translate_pieces($move, $language) {
  *		string 'pgn'
  */
 function mf_chess_pgn_to_html($pgn, $extra_comment = []) {
+	wrap_include('format', 'chess');
+
 	// do some cleanup
 	if (empty($pgn['moves'])) {
 		$game = ['bool' => '*', 'move' => 0, 'html' => '', 'pgn' => ''];
@@ -321,10 +314,9 @@ function mf_chess_pgn_to_html($pgn, $extra_comment = []) {
 				$game['html'] .= $move.' ';
 			}
 		} elseif (substr($move, 0, 1) === '$') {
-			if (!isset($nag)) $nag = mf_chess_pgn_basics();
 			if (substr($game['html'], -1) === ' ')
 				$game['html'] = substr($game['html'], 0, -1);
-			$game['html'] .= $nag['NAG'][substr($move, 1)]['CSM'].' ';
+			$game['html'] .= mf_chess_pgn_nag($move).' ';
 		} else {
 			if (!$variant) {
 				$game['html'] .= '<a href="javascript:SetMove('.$game['move'].',0)"><b>';
