@@ -100,13 +100,15 @@ function show_pgn_game($file, $nos) {
 	foreach (array_keys($games) as $index)
 		$games[$index]['moves_p'] = parse_movetext($games[$index]['moves']);
 
-	$output = '';
 	if (!is_array($nos)) $nos = [$nos];
+	$data = [];
 	foreach ($nos as $no) {
-		$output .= print_game($games, $no);
-		$output .= '<p class="pgn"><a href="'.$file.'">Partie im PGN-Format</a></p>';
+		$data[] = [
+			'html' => print_game($games, $no),
+			'path' => $file
+		];
 	}
-	return $output;
+	return wrap_template('chessgames', $data);
 }
 
 function print_game($games, $seq) {

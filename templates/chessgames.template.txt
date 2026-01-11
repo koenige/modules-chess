@@ -1,0 +1,15 @@
+# chess module
+# template for chess games
+#
+# Part of »Zugzwang Project«
+# http://www.zugzwang.org/modules/chess
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2005, 2026 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+%%% loop start %%%
+%%% item html %%%
+<p class="pgn"><a href="%%% item path %%%">Partie im PGN-Format</a></p>
+
+%%% loop end %%%
