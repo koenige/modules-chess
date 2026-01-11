@@ -83,22 +83,15 @@ DM Schnellschach Höckendorf, 16.04.2004
 */
 
 function show_pgn_game($file, $seq) {
-	global $games;
-	global $comments;
-	global $variants;
-	global $pgn;
 	wrap_include('pgn', 'chess');
 
 	$output = '';
-	$pgn = mf_chess_pgn_basics();
 	if (!file_exists($_SERVER['DOCUMENT_ROOT'].$file)) return false; // @todo Error!
 
 	$pgn_file = file($_SERVER['DOCUMENT_ROOT'].$file);
 	$games = mf_chess_pgn_parse($pgn_file, $_SERVER['DOCUMENT_ROOT'].$file);
 
 	foreach (array_keys($games) as $masterkey) {
-		$comments = [];
-		$variants = false;
 		$games[$masterkey]['moves_p'] = parse_movetext($games[$masterkey]['moves']);
 	}
 	if (is_array($seq)) {
@@ -114,8 +107,6 @@ function show_pgn_game($file, $seq) {
 }
 
 function print_game($games, $seq) {
-	global $pgn;
-	global $NAGs;
 	$output = '';
 	$output.= '<ul class="partie">';
 	$output.= '<li class="white">'.$games[$seq]['head']['White'];
@@ -184,7 +175,9 @@ function print_moves($game_moves, $level) {
 }
 
 function show_nag($my_nag) {
-	global $pgn;
+	static $pgn = [];
+	if (!$pgn) $pgn = mf_chess_pgn_basics();
+	
 	$my_nag = substr($my_nag, 1); // strip $
 	return $pgn['NAG'][$my_nag]['CSM'].' ';
 }
@@ -211,11 +204,10 @@ function parse_comments($comments) {
 	return $comments;
 }
 
+function parse_movetext($movetext, $comments = [], $variants = []) {
+	static $pgn = [];
+	if (!$pgn) $pgn = mf_chess_pgn_basics();
 
-function parse_movetext($movetext) {
-	global $pgn;
-	global $variants;
-	global $comments;
 	$moves = '';
 	if (is_array($movetext)) 
 		foreach ($movetext as $move)
@@ -277,7 +269,7 @@ function parse_movetext($movetext) {
 				$j = substr($movepart,7);
 				$color = 'variant'.$var_index;
 				$var_index++;
-				$move_a[$movenum][$color] = parse_movetext($variants[$j]);
+				$move_a[$movenum][$color] = parse_movetext($variants[$j], $comments, $variants);
 			} else {
 				if (!isset($move_a[$movenum]))
 					if (!$movenum) $color = 'comment'.$com_index;
