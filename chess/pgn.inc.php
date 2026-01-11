@@ -9,15 +9,10 @@
  * http://www.zugzwang.org/modules/chess
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2021-2023 Gustaf Mossakowski
+ * @copyright Copyright © 2021-2023, 2026 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
-
-function mf_chess_pgn_basics() {
-	$pgn['game_endings'] = ['1-0', '0-1', '1/2-1/2', '*'];
-	return $pgn;
-}
 
 /**
  * Search a PGN file to find a game that corresponds to some search strings

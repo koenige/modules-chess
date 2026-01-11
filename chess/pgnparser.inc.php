@@ -96,9 +96,6 @@ function mf_chess_pgnparse_comments($comments) {
 }
 
 function mf_chess_pgnparse_moves($movetext, $comments = [], $variants = []) {
-	static $pgn = [];
-	if (!$pgn) $pgn = mf_chess_pgn_basics();
-
 	$moves = '';
 	if (is_array($movetext)) 
 		foreach ($movetext as $move)
@@ -167,10 +164,11 @@ function mf_chess_pgnparse_moves($movetext, $comments = [], $variants = []) {
 					elseif ($startcolor == 'black') $color = 'black';
 					else $color = 'white';
 				elseif (isset($move_a[$movenum]['white'])) $color = 'black';
-				if (in_array($movepart, $pgn['game_endings'])) {
+				if (in_array($movepart, wrap_setting('chess_pgn_game_endings'))) {
 					//$move_a['result'] = $movepart; // uninteresting, we have that already
-				} else
+				} else {
 					$move_a[$movenum][$color] = $movepart;
+				}
 			}
 		}
 	return $move_a;
