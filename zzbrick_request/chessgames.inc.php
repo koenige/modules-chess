@@ -63,8 +63,9 @@ function mf_chess_chessgames($params) {
 }
 
 function print_moves($game_moves, $level) {
+	wrap_include('format', 'chess');
 	$output = '';
-	$output.= '<dl><dt>';
+	$output .= '<dl><dt>';
 	$space = ' ';
 	$i = 0;
 	if ($level > 1) {
