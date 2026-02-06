@@ -5,7 +5,7 @@
 # https://www.zugzwang.org/modules/chess
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2014, 2017-2022, 2024 Gustaf Mossakowski
+# @copyright Copyright © 2014, 2017-2022, 2024, 2026 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 %%% loop start %%%
@@ -100,7 +100,7 @@
 [EventDate "%%% item EventDate %%%"]
 
 %%% if moves %%%
-%%% item moves pgn_wordwrap %%%
+%%% item moves format=pgn_wordwrap %%%
 %%% else %%%
 * 
 %%% endif %%%
