@@ -203,14 +203,14 @@ function mf_chess_pgn_remove_double_emptylines($pgn) {
  * Translate pieces to a different language than English
  *
  * @param string $move
- * @param string $language
+ * @param string $lang (optional)
  * @return string
  */
-function mf_chess_pgn_translate_pieces($move, $language) {
-	$piece = substr($move, 0, 1);
-	if (in_array($piece, wrap_setting('chess_pgn_pieces')))
-		$piece = wrap_text($piece, ['context' => 'piece']);
-	return $piece.substr($move, 1, strlen($move));
+function mf_chess_pgn_translate_pieces($move, $lang = null) {
+	wrap_include('format', 'chess');
+	$piece = mf_chess_piece_pgn(substr($move, 0, 1), $lang);
+	if (!$piece) return $move;
+	return $piece.substr($move, 1);
 }
 
 /**
@@ -307,7 +307,7 @@ function mf_chess_pgn_to_html($pgn, $extra_comment = []) {
 				$game['html'] .= '<a href="javascript:SetMove('.$game['move'].',0)"><b>';
 				$game['pgn'] .= $move.' ';
 			}
-			$game['html'] .= mf_chess_pgn_translate_pieces($move, 'de');
+			$game['html'] .= mf_chess_pgn_translate_pieces($move);
 			if (!$variant)	{
 				$game['html'] .= '</b></a>';
 			}

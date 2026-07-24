@@ -87,14 +87,14 @@ function mf_chess_piece_short($piece, $lang = null) {
 /**
  * PGN move prefix
  *
- * Accepts upper- or lowercase FEN letters. Pawn moves use no letter, so
+ * Accepts uppercase letters. Pawn moves use no letter, so
  * returns an empty string for P/p (not the abbr column value in the TSV).
- * @param string $piece single FEN piece letter
+ * @param string $piece single piece letter
  * @param string $lang (optional)
  * @return string
  */
 function mf_chess_piece_pgn($piece, $lang = null) {
-	$piece = strtoupper($piece);
+	if (!ctype_upper($piece)) return '';
 	if ($piece === 'P') return '';
 	return wrap_reference('chess-pieces', 'short', $lang)[$piece] ?? '';
 }
