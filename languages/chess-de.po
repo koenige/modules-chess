@@ -26,6 +26,7 @@ msgstr ""
 msgid "King"
 msgstr "König"
 
+# Chess piece, abbreviated (king)
 #: configuration/chess-pieces.tsv:18
 msgctxt "piece"
 msgid "K"
@@ -35,6 +36,7 @@ msgstr "K"
 msgid "Queen"
 msgstr "Dame"
 
+# Chess piece, abbreviated (queen)
 #: configuration/chess-pieces.tsv:19
 msgctxt "piece"
 msgid "Q"
@@ -44,6 +46,7 @@ msgstr "D"
 msgid "Rook"
 msgstr "Turm"
 
+# Chess piece, abbreviated (rook)
 #: configuration/chess-pieces.tsv:20
 msgctxt "piece"
 msgid "R"
@@ -53,6 +56,7 @@ msgstr "T"
 msgid "Bishop"
 msgstr "Läufer"
 
+# Chess piece, abbreviated (bishop)
 #: configuration/chess-pieces.tsv:21
 msgctxt "piece"
 msgid "B"
@@ -62,6 +66,7 @@ msgstr "L"
 msgid "Knight"
 msgstr "Springer"
 
+# Chess piece, abbreviated (knight)
 #: configuration/chess-pieces.tsv:22
 msgctxt "piece"
 msgid "N"
@@ -71,6 +76,7 @@ msgstr "S"
 msgid "Pawn"
 msgstr "Bauer"
 
+# Chess piece, abbreviated (pawn)
 #: configuration/chess-pieces.tsv:23
 msgctxt "piece"
 msgid "P"
