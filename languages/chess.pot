@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- chess module\n"
-"POT-Creation-Date: 2026-07-24 11:36+0000\n"
+"POT-Creation-Date: 2026-07-24 12:04+0000\n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -138,10 +138,6 @@ msgstr ""
 
 #: templates/diagram.template.txt:19
 msgid "Black to move"
-msgstr ""
-
-#: zzbrick_request/chessgames.inc.php:48
-msgid "Unable to find game %s in file %s"
 msgstr ""
 
 #: zzbrick_request/diagram.inc.php:137

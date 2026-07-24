@@ -45,9 +45,9 @@ function mf_chess_chessgames($params) {
 	$index = 0;
 	foreach ($nos as $no) {
 		if (!array_key_exists($no, $games)) {
-			wrap_error(wrap_text('Unable to find game %s in file %s',
+			wrap_error(['Unable to find game %s in file %s',
 				['values' => [$no, $filename]]
-			), E_USER_WARNING);
+			]), E_USER_WARNING);
 			continue;
 		}
 		$data[$index] = $games[$no]['head'];

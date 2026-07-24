@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- chess module\n"
-"POT-Creation-Date: 2026-07-24 11:36+0000\n"
+"POT-Creation-Date: 2026-07-24 12:04+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Gustaf Mossakowski <gustaf@koenige.org>\n"
 "Language-Team: \n"
@@ -145,10 +145,6 @@ msgstr "Weiß am Zug"
 #: templates/diagram.template.txt:19
 msgid "Black to move"
 msgstr "Schwarz am Zug"
-
-#: zzbrick_request/chessgames.inc.php:48
-msgid "Unable to find game %s in file %s"
-msgstr "Das Spiel %s konnte in der Datei %s nicht gefunden werden."
 
 #: zzbrick_request/diagram.inc.php:137
 msgctxt "Extra piece"
