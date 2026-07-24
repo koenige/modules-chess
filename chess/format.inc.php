@@ -61,6 +61,97 @@ function mf_chess_pgn_nag($nag) {
 }
 
 /**
+ * Long piece name
+ *
+ * Accepts upper- or lowercase FEN letters (K/k → King / König).
+ * @param string $piece single FEN piece letter
+ * @param string $lang (optional)
+ * @return string
+ */
+function mf_chess_piece_long($piece, $lang = null) {
+	return wrap_reference('chess-pieces', 'long', $lang)[strtoupper($piece)] ?? '';
+}
+
+/**
+ * Short piece name
+ *
+ * Accepts upper- or lowercase FEN letters.
+ * @param string $piece single FEN piece letter
+ * @param string $lang (optional)
+ * @return string
+ */
+function mf_chess_piece_short($piece, $lang = null) {
+	return wrap_reference('chess-pieces', 'short', $lang)[strtoupper($piece)] ?? '';
+}
+
+/**
+ * PGN move prefix
+ *
+ * Accepts upper- or lowercase FEN letters. Pawn moves use no letter, so
+ * returns an empty string for P/p (not the abbr column value in the TSV).
+ * @param string $piece single FEN piece letter
+ * @param string $lang (optional)
+ * @return string
+ */
+function mf_chess_piece_pgn($piece, $lang = null) {
+	$piece = strtoupper($piece);
+	if ($piece === 'P') return '';
+	return wrap_reference('chess-pieces', 'short', $lang)[$piece] ?? '';
+}
+
+/**
+ * Unicode chess symbol
+ *
+ * FEN letter case selects colour: uppercase = white (♔), lowercase = black (♚).
+ *
+ * @param string $piece single FEN piece letter
+ * @return string
+ */
+function mf_chess_piece_unicode($piece) {
+	if (strlen($piece) === 1)
+		$piece = mf_chess_piece_id($piece);
+	return wrap_reference('chess-pieces-titles', 'unicode')[$piece] ?? '';
+}
+
+/**
+ * SVG markup for a chess piece
+ *
+ * @param string $piece single FEN piece letter (case selects white/black)
+ * @param string $chess_set piece set name; defaults to setting chess_piece_set
+ * @return string
+ * @todo not implemented
+ */
+function mf_chess_piece_svg($piece, $chess_set = '') {
+	return '';
+}
+
+/**
+ * Coloured piece title from configuration/chess-pieces-titles.tsv
+ *
+ * FEN letter case selects colour: uppercase = white (wK), lowercase = black (bK).
+ *
+ * @param string $piece single FEN piece letter
+ * @param string $lang (optional)
+ * @return string e.g. "white king", "schwarzer Bauer"
+ */
+function mf_chess_piece_title($piece, $lang = null) {
+	return wrap_reference('chess-pieces-titles', 'long', $lang)[mf_chess_piece_id($piece)] ?? '';
+}
+
+/**
+ * Map a FEN piece letter to a chess-pieces-titles.tsv id (wK, bP, …)
+ *
+ * @param string $piece single FEN piece letter
+ * @return string empty when invalid
+ */
+function mf_chess_piece_id($piece) {
+	if ($piece === '') return '';
+	if (!preg_match('/^[KQRBNPkqrbnp]$/', $piece)) return '';
+	$colour = ($piece === strtolower($piece)) ? 'b' : 'w';
+	return $colour.strtoupper($piece);
+}
+
+/**
  * format a name of a player
  *
  * @param string $name

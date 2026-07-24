@@ -1,0 +1,26 @@
+# chess module
+# Coloured piece titles and unicode symbols (one row per FEN piece)
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/chess
+#
+# Variables
+# reference = 1
+# translate = label
+# extra_columns = unicode
+#
+#:abbr	label	unicode
+#key 0
+
+wK	white king	♔
+wQ	white queen	♕
+wR	white rook	♖
+wB	white bishop	♗
+wN	white knight	♘
+wP	white pawn	♙
+bK	black king	♚
+bQ	black queen	♛
+bR	black rook	♜
+bB	black bishop	♝
+bN	black knight	♞
+bP	black pawn	♟

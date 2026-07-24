@@ -4,42 +4,116 @@
 # Part of »Zugzwang Project«
 # https://www.zugzwang.org/modules/chess
 #
-# @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2026 Gustaf Mossakowski
-# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- chess module\n"
-"POT-Creation-Date: \n"
+"POT-Creation-Date: 2026-07-24 11:22+0000\n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# Chess piece, abbreviated (king)
+#: configuration/chess-pieces.tsv:18
+msgid "King"
+msgstr ""
+
+#: configuration/chess-pieces.tsv:18
 msgctxt "piece"
 msgid "K"
 msgstr ""
 
-# Chess piece, abbreviated (queen)
+#: configuration/chess-pieces.tsv:19
+msgid "Queen"
+msgstr ""
+
+#: configuration/chess-pieces.tsv:19
 msgctxt "piece"
 msgid "Q"
 msgstr ""
 
-# Chess piece, abbreviated (rook)
+#: configuration/chess-pieces.tsv:20
+msgid "Rook"
+msgstr ""
+
+#: configuration/chess-pieces.tsv:20
 msgctxt "piece"
 msgid "R"
 msgstr ""
 
-# Chess piece, abbreviated (bishop)
+#: configuration/chess-pieces.tsv:21
+msgid "Bishop"
+msgstr ""
+
+#: configuration/chess-pieces.tsv:21
 msgctxt "piece"
 msgid "B"
 msgstr ""
 
-# Chess piece, abbreviated (knight)
+#: configuration/chess-pieces.tsv:22
+msgid "Knight"
+msgstr ""
+
+#: configuration/chess-pieces.tsv:22
 msgctxt "piece"
 msgid "N"
+msgstr ""
+
+#: configuration/chess-pieces.tsv:23
+msgid "Pawn"
+msgstr ""
+
+#: configuration/chess-pieces.tsv:23
+msgctxt "piece"
+msgid "P"
+msgstr ""
+
+#: configuration/chess-pieces-titles.tsv:15
+msgid "white king"
+msgstr ""
+
+#: configuration/chess-pieces-titles.tsv:16
+msgid "white queen"
+msgstr ""
+
+#: configuration/chess-pieces-titles.tsv:17
+msgid "white rook"
+msgstr ""
+
+#: configuration/chess-pieces-titles.tsv:18
+msgid "white bishop"
+msgstr ""
+
+#: configuration/chess-pieces-titles.tsv:19
+msgid "white knight"
+msgstr ""
+
+#: configuration/chess-pieces-titles.tsv:20
+msgid "white pawn"
+msgstr ""
+
+#: configuration/chess-pieces-titles.tsv:21
+msgid "black king"
+msgstr ""
+
+#: configuration/chess-pieces-titles.tsv:22
+msgid "black queen"
+msgstr ""
+
+#: configuration/chess-pieces-titles.tsv:23
+msgid "black rook"
+msgstr ""
+
+#: configuration/chess-pieces-titles.tsv:24
+msgid "black bishop"
+msgstr ""
+
+#: configuration/chess-pieces-titles.tsv:25
+msgid "black knight"
+msgstr ""
+
+#: configuration/chess-pieces-titles.tsv:26
+msgid "black pawn"
 msgstr ""

@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- chess module\n"
-"POT-Creation-Date: \n"
+"POT-Creation-Date: 2026-07-24 11:22+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Gustaf Mossakowski <gustaf@koenige.org>\n"
 "Language-Team: \n"
@@ -20,29 +20,106 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
-# Chess piece, abbreviated (king)
+#: configuration/chess-pieces.tsv:18
+msgid "King"
+msgstr "König"
+
+#: configuration/chess-pieces.tsv:18
 msgctxt "piece"
 msgid "K"
 msgstr "K"
 
-# Chess piece, abbreviated (queen)
+#: configuration/chess-pieces.tsv:19
+msgid "Queen"
+msgstr "Dame"
+
+#: configuration/chess-pieces.tsv:19
 msgctxt "piece"
 msgid "Q"
 msgstr "D"
 
-# Chess piece, abbreviated (rook)
+#: configuration/chess-pieces.tsv:20
+msgid "Rook"
+msgstr "Turm"
+
+#: configuration/chess-pieces.tsv:20
 msgctxt "piece"
 msgid "R"
 msgstr "T"
 
-# Chess piece, abbreviated (bishop)
+#: configuration/chess-pieces.tsv:21
+msgid "Bishop"
+msgstr "Läufer"
+
+#: configuration/chess-pieces.tsv:21
 msgctxt "piece"
 msgid "B"
 msgstr "L"
 
-# Chess piece, abbreviated (knight)
+#: configuration/chess-pieces.tsv:22
+msgid "Knight"
+msgstr "Springer"
+
+#: configuration/chess-pieces.tsv:22
 msgctxt "piece"
 msgid "N"
 msgstr "S"
+
+#: configuration/chess-pieces.tsv:23
+msgid "Pawn"
+msgstr "Bauer"
+
+#: configuration/chess-pieces.tsv:23
+msgctxt "piece"
+msgid "P"
+msgstr "B"
+
+#: configuration/chess-pieces-titles.tsv:15
+msgid "white king"
+msgstr "weißer König"
+
+#: configuration/chess-pieces-titles.tsv:16
+msgid "white queen"
+msgstr "weiße Dame"
+
+#: configuration/chess-pieces-titles.tsv:17
+msgid "white rook"
+msgstr "weißer Turm"
+
+#: configuration/chess-pieces-titles.tsv:18
+msgid "white bishop"
+msgstr "weißer Läufer"
+
+#: configuration/chess-pieces-titles.tsv:19
+msgid "white knight"
+msgstr "weißer Springer"
+
+#: configuration/chess-pieces-titles.tsv:20
+msgid "white pawn"
+msgstr "weißer Bauer"
+
+#: configuration/chess-pieces-titles.tsv:21
+msgid "black king"
+msgstr "schwarzer König"
+
+#: configuration/chess-pieces-titles.tsv:22
+msgid "black queen"
+msgstr "schwarze Dame"
+
+#: configuration/chess-pieces-titles.tsv:23
+msgid "black rook"
+msgstr "schwarzer Turm"
+
+#: configuration/chess-pieces-titles.tsv:24
+msgid "black bishop"
+msgstr "schwarzer Läufer"
+
+#: configuration/chess-pieces-titles.tsv:25
+msgid "black knight"
+msgstr "schwarzer Springer"
+
+#: configuration/chess-pieces-titles.tsv:26
+msgid "black pawn"
+msgstr "schwarzer Bauer"

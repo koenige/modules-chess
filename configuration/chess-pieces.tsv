@@ -1,0 +1,23 @@
+# chess module
+# Chess piece names and PGN abbreviations
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/chess
+#
+# Variables
+# reference = 1
+# reference_short = abbr
+# reference_long = name
+# translate = abbr, name
+# translate_context = abbr:piece
+# extra_columns = unicode
+#
+#:fen	abbr	name	unicode
+#key 0
+
+K	K	King	♔
+Q	Q	Queen	♕
+R	R	Rook	♖
+B	B	Bishop	♗
+N	N	Knight	♘
+P	P	Pawn	♙
