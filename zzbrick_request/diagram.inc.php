@@ -8,7 +8,7 @@
  * http://www.zugzwang.org/modules/chess
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 10.12.2003, 2015-2016, 2021 Gustaf Mossakowski
+ * @copyright Copyright © 10.12.2003, 2015-2016, 2021, 2026 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -26,6 +26,8 @@
  * @todo use preg_match() to check whether string is valid
  */
 function mod_chess_diagram($params, $settings) {
+	wrap_include('format', 'chess');
+	
 	$fen = implode(' ', $params);
 
 	// cleanup @todo redirect
@@ -114,36 +116,41 @@ function mod_chess_diagram($params, $settings) {
 			}
 
 			switch ($field) {
-				case "K": $cell['src'] = "wK"; $cell['alt'] = "K"; $cell['title'] = 'weißer König'; break;
-				case "Q": $cell['src'] = "wD"; $cell['alt'] = "D"; $cell['title'] = 'weiße Dame'; break;
-				case "R": $cell['src'] = "wT"; $cell['alt'] = "T"; $cell['title'] = 'weißer Turm'; break;
-				case "B": $cell['src'] = "wL"; $cell['alt'] = "L"; $cell['title'] = 'weißer Läufer'; break;
-				case "N": $cell['src'] = "wS"; $cell['alt'] = "S"; $cell['title'] = 'weißer Springer'; break;
-				case "P": $cell['src'] = "wB"; $cell['alt'] = "B"; $cell['title'] = 'weißer Bauer'; break;
-				case "k": $cell['src'] = "sK"; $cell['alt'] = "k"; $cell['title'] = 'schwarzer König'; break;
-				case "q": $cell['src'] = "sD"; $cell['alt'] = "d"; $cell['title'] = 'schwarze Dame'; break;
-				case "r": $cell['src'] = "sT"; $cell['alt'] = "t"; $cell['title'] = 'schwarzer Turm'; break;
-				case "b": $cell['src'] = "sL"; $cell['alt'] = "l"; $cell['title'] = 'schwarzer Läufer'; break;
-				case "n": $cell['src'] = "sS"; $cell['alt'] = "s"; $cell['title'] = 'schwarzer Springer'; break;
-				case "p": $cell['src'] = "sB"; $cell['alt'] = "b"; $cell['title'] = 'schwarzer Bauer'; break;
-				case "1": $cell['src'] = ""; $cell['alt'] = "."; $cell['title'] = ''; break;
+				case "1":
+					$cell['src'] = "";
+					$cell['alt'] = ".";
+					$cell['title'] = '';
+					break;
 				default:
-					if (!empty($settings['piece'][strtoupper($field)])) {
+					// @todo rename pieces to use English abbreviations
+					if ($piece = mf_chess_piece_short($field, 'de')) {
+						$cell['src'] = (ctype_upper($field) ? 'w' : 's').$piece;
+						$cell['alt'] = $field;
+						$cell['title'] = mf_chess_piece_title($field);
+						break;
+					}
+					$piece_key = strtoupper($field);
+					if (!empty($settings['piece'][$piece_key])) {
 						if (ctype_upper($field)) {
 							$cell['src'] = "w".strtoupper($field);
 							$cell['alt'] = $field;
-							$cell['title'] = 'weißer '.$settings['piece'][strtoupper($field)];
+							$cell['title'] = wrap_text('white %s',
+								['values' => $settings['piece'][$piece_key], 'context' => 'Extra piece']
+							);
 						} else {
 							$cell['src'] = "s".strtoupper($field);
 							$cell['alt'] = $field;
-							$cell['title'] = 'schwarzer '.$settings['piece'][strtoupper($field)];
+							$cell['title'] = wrap_text('black %s',
+								['values' => $settings['piece'][$piece_key], 'context' => 'Extra piece']
+							);
 						}
 						break;
 					}
 					if (!$settings['check']) break;
-					$output = '<p class="error">FEN nicht gültig</p>';
-					wrap_error(sprintf('FEN nicht gültig: %s (Symbol %s)', $fen, $field));
-					return $output;
+					wrap_error(['FEN invalid: %s (Symbol %s)', ['values' => [$fen, $field]]]);
+					$data['fen_invalid'] = true;
+					$page['text'] = wrap_template('diagram', $data);
+					return $page;
  			}
 			if ($field_count === 0) {
 				$cell['field'] = $field_top_right;

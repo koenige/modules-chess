@@ -117,3 +117,29 @@ msgstr ""
 #: configuration/chess-pieces-titles.tsv:26
 msgid "black pawn"
 msgstr ""
+
+#: templates/diagram.template.txt:12
+msgid "FEN not valid"
+msgstr ""
+
+#: templates/diagram.template.txt:15
+msgid "Position on the chessboard"
+msgstr ""
+
+#: templates/diagram.template.txt:17
+msgid "White to move"
+msgstr ""
+
+#: templates/diagram.template.txt:19
+msgid "Black to move"
+msgstr ""
+
+#: zzbrick_request/diagram.inc.php:137
+msgctxt "Extra piece"
+msgid "white %s"
+msgstr ""
+
+#: zzbrick_request/diagram.inc.php:143
+msgctxt "Extra piece"
+msgid "black %s"
+msgstr ""

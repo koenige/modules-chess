@@ -123,3 +123,29 @@ msgstr "schwarzer Springer"
 #: configuration/chess-pieces-titles.tsv:26
 msgid "black pawn"
 msgstr "schwarzer Bauer"
+
+#: templates/diagram.template.txt:12
+msgid "FEN not valid"
+msgstr "FEN ungültig"
+
+#: templates/diagram.template.txt:15
+msgid "Position on the chessboard"
+msgstr "Stellung auf Schachbrett"
+
+#: templates/diagram.template.txt:17
+msgid "White to move"
+msgstr "Weiß am Zug"
+
+#: templates/diagram.template.txt:19
+msgid "Black to move"
+msgstr "Schwarz am Zug"
+
+#: zzbrick_request/diagram.inc.php:137
+msgctxt "Extra piece"
+msgid "white %s"
+msgstr "weißer %s"
+
+#: zzbrick_request/diagram.inc.php:143
+msgctxt "Extra piece"
+msgid "black %s"
+msgstr "schwarzer %s"

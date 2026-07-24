@@ -5,14 +5,18 @@
 # http://www.zugzwang.org/modules/chess
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2015, 2021, 2024 Gustaf Mossakowski
+# @copyright Copyright © 2015, 2021, 2024, 2026 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
-<table summary="Stellung auf Schachbrett" class="brett">
+%%% if fen_invalid %%%
+<p class="error">%%% text FEN not valid %%%</p>
+
+%%% else %%%
+<table summary="%%% text Position on the chessboard %%%" class="brett">
 %%% if white_to_move %%%
-<caption align="bottom" class="amzug">%%% if caption %%%%%% item caption %%%%%% else %%%Weiß am Zug%%% endif %%%</caption>
+<caption align="bottom" class="amzug">%%% if caption %%%%%% item caption %%%%%% else %%%%%% text White to move %%%%%% endif %%%</caption>
 %%% elseif black_to_move %%%
-<caption align="top" class="amzug">%%% if caption %%%%%% item caption %%%%%% else %%%Schwarz am Zug%%% endif %%%</caption>
+<caption align="top" class="amzug">%%% if caption %%%%%% item caption %%%%%% else %%%%%% text Black to move %%%%%% endif %%%</caption>
 %%% endif %%%
 <tfoot>
 <tr><td>&nbsp;&nbsp;</td>
@@ -31,3 +35,4 @@
 %%% loop end %%%
 </tbody>
 </table>
+%%% endif %%%
