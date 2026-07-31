@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- chess module\n"
-"POT-Creation-Date: 2026-07-24 12:04+0000\n"
+"POT-Creation-Date: 2026-07-31 09:59+0000\n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -26,6 +26,14 @@ msgstr ""
 
 #: configuration/settings.cfg:32
 msgid "Display names first name last name, not last, first"
+msgstr ""
+
+#: configuration/settings.cfg:37
+msgid "Custom PGN [EventType] header value for this category"
+msgstr ""
+
+#: configuration/settings.cfg:50
+msgid "Standard PGN [Termination] header value for this category"
 msgstr ""
 
 #: zzbrick_request/chessgames.inc.php:48
