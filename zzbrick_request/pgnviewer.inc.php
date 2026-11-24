@@ -23,7 +23,11 @@
  * %%% request pgnviewer /2024/dem-u18/partien/1-live.pgn %%%
  * %%% request pgnviewer /a/partien/1-live.pgn /b/partien/1-live.pgn %%%
  *
+ * Game ids are built from the link id, round and board; links without
+ * an id get `pgn1`, `pgn2` … in the order given.
+ *
  * @param array $params PGN URLs (site-relative or absolute)
+ *		or arrays with `url` and `id`
  * @param array $settings optional brick settings
  * @return array|false $page
  */
@@ -43,10 +47,12 @@ function mod_chess_pgnviewer($params, $settings = []) {
 			: (bool) wrap_setting('chess_pgnviewer_with_jquery'),
 	];
 
-	foreach ($params as $link) {
-		$link = trim($link);
-		if ($link === '') continue;
-		$data['pgn_links'][] = ['url' => $link];
+	foreach ($params as $index => $link) {
+		if (!is_array($link)) $link = ['url' => $link];
+		$link['url'] = trim($link['url']);
+		if ($link['url'] === '') continue;
+		if (empty($link['id'])) $link['id'] = sprintf('pgn%d', $index + 1);
+		$data['pgn_links'][] = $link;
 	}
 	if (!$data['pgn_links']) return false;
 

@@ -42,7 +42,7 @@ function chessPgnViewerTrack(category, action, label) {
 
 $( document ).ready(function() {
 	pgnlink.forEach(function(item){
-		pgnFromUrl(item);
+		pgnFromUrl(item.url, item.id);
 	});
 	//getAjaxRequest(false);
 	buildSelectGame();
@@ -173,7 +173,7 @@ function loadAlterklasse(item){
 	board[item].resize();
 }
 
-function pgnFromUrl(url) { 			// analyzes the imported PGN file
+function pgnFromUrl(url, linkId) { 			// analyzes the imported PGN file
 	var pgn = getURL(url);
 	pgnurl = url;
   if(pgn !== undefined){
@@ -214,8 +214,10 @@ function pgnFromUrl(url) { 			// analyzes the imported PGN file
 	      }
 	    }
 	  }
+		var position = 0;
 		for (var k in pgnDataTemp){
 			if (pgnDataTemp.hasOwnProperty(k)) {
+				position++;
 				var temp = pgnDataTemp[k]['PGN'].join('\n');
 		  	//console.log(temp.split(/\d+\.\s/g));
 				var matches = temp.match(/"\d+:\d+:\d+"/g);
@@ -229,7 +231,7 @@ function pgnFromUrl(url) { 			// analyzes the imported PGN file
 						pgnDataTemp[k]['BlackClock'] = matches.pop().replaceAll('"', '');
 					}
 				}
-				var gameidTemp = MD5(pgnDataTemp[k]['Event']+pgnDataTemp[k]['Round']+pgnDataTemp[k]['White']+pgnDataTemp[k]['Black']);
+				var gameidTemp = pgnGameId(linkId, pgnDataTemp[k], position);
 				pgnData[gameidTemp] = pgnDataTemp[k];
 
 				if(gamesTurnier[pgnDataTemp[k]['Event']] === undefined){
@@ -267,6 +269,15 @@ function pgnFromUrl(url) { 			// analyzes the imported PGN file
 		  }
 		}
 	}
+}
+
+/*
+ * game id from link id, round and board, e.g. 2024-dem-u18-4-3-2;
+ * used in element ids and selectors, so only letters, digits, - and _
+ */
+function pgnGameId(linkId, gameData, position) {
+	var parts = [linkId, gameData['Round'] || '', gameData['Board'] || position];
+	return parts.join('-').replace(/[^A-Za-z0-9_-]+/g, '-').replace(/-+$/, '');
 }
 
 function newBoardFromHTML(gameid, pgn){
@@ -372,7 +383,7 @@ function getAjaxRequest(loadpgn){
 
 	if(typeof loadpgn === 'undefined' || loadpgn == true){
 		pgnlink.forEach(function(item){
-			pgnFromUrl(item);
+			pgnFromUrl(item.url, item.id);
 		});
 		buildSelectGame();
 	}
