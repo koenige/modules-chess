@@ -16,10 +16,10 @@
   <button type="button" id="gameChooserOpen">%%% text Choose games %%%</button>
   <label class="pgnviewer-columns">%%% text Boards per row %%%
     <select id="boardsize">
-      <option value="12">1</option>
-      <option value="6">2</option>
-      <option value="4">3</option>
-      <option value="3" selected>4</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4" selected>4</option>
     </select>
   </label>
   <label><input id="notation" type="checkbox" checked> %%% text Show notation %%%</label>
@@ -28,7 +28,7 @@
     <span style="display:none;" class="refreshcountdown-cont">%%% text Next update in %%% <span id="refreshcountdown"></span></span>
   </span>
 </div>
-<div id="board" class="row"></div>
+<div id="board" data-columns="4"></div>
 <dialog id="gameChooser" class="pgnviewer-games" aria-labelledby="gameChooserTitle">
   <h2 id="gameChooserTitle">%%% text Choose games %%%</h2>
   <div id="gameSelectCont"></div>

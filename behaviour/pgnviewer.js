@@ -32,7 +32,8 @@ var pieceTheme = chessPgnViewerConfig.pieceTheme
 	|| '/_behaviour/chessboardjs/releases/0.3.0/img/chesspieces/wikipedia/{piece}.png';
 var viewerText = chessPgnViewerConfig.text || {};
 var pgnurl = '';
-var colselect = 'col-md-3 col-sm-3 col-xs-3';
+var boardsPerRow = 4;
+var boardsPerRowPreferred = 4;
 var teamPaarings = [];
 var shownGames = {};
 
@@ -289,13 +290,14 @@ function newBoard(gameid){
 		/* Hier könnte der Ajax-Request kommen */
 
 		/* HTML bauen */
-		var html = "<div class='col "+ colselect +" boarditem' id='boardcont"+gameid+"'><div class='boardtexttop' id='game"+gameid+"-dataTop'></div><div class='boardview' id='board"+gameid+"'></div>";
+		var html = "<div class='boarditem' id='boardcont"+gameid+"'><div class='boardtexttop' id='game"+gameid+"-dataTop'></div><div class='boardview' id='board"+gameid+"'></div>";
 		html += "<div class='boardtextbuttom' id='game"+gameid+"-data'></div>";
-		html += "<div id='game"+gameid+"-scorecont'><span id='game"+gameid+"-score'></span><span id='game"+gameid+"-depth'></span><span id='game"+gameid+"-bestmove'></span><span id='game"+gameid+"-proposal'></span></div>";
-		html += "<div class='boardbutton' id='board"+gameid+"-buttons'><button title='"+viewerText.toStart+"' type='button' class='btn btn-default btnStart' rel='"+gameid+"'>|<</button>";
-		html += "<button title='"+viewerText.previousMove+"' type='button' class='btn btn-default btnPrevious' rel='"+gameid+"'><</button>";
-		html += "<button title='"+viewerText.nextMove+"' type='button' class='btn btn-default btnNext' rel='"+gameid+"'>></button>";
-		html += "<button title='"+viewerText.toEnd+"' type='button' class='btn btn-default btnEnd' rel='"+gameid+"'>>|</button><a title='"+viewerText.closeBoard+"' class='boardclose' rel='"+gameid+"'>"+viewerText.closeBoard+"</a></div>";
+		html += "<div class='boardbutton' id='board"+gameid+"-buttons'><span class='boardnav'>";
+		html += "<button title='"+viewerText.toStart+"' aria-label='"+viewerText.toStart+"' type='button' class='btnStart' rel='"+gameid+"'>«</button>";
+		html += "<button title='"+viewerText.previousMove+"' aria-label='"+viewerText.previousMove+"' type='button' class='btnPrevious' rel='"+gameid+"'>‹</button>";
+		html += "<button title='"+viewerText.nextMove+"' aria-label='"+viewerText.nextMove+"' type='button' class='btnNext' rel='"+gameid+"'>›</button>";
+		html += "<button title='"+viewerText.toEnd+"' aria-label='"+viewerText.toEnd+"' type='button' class='btnEnd' rel='"+gameid+"'>»</button></span>";
+		html += "<button type='button' title='"+viewerText.closeBoard+"' class='boardclose' rel='"+gameid+"'><span class='boardclose-text'>"+viewerText.closeBoard+"</span><span class='boardclose-icon' aria-hidden='true'>×</span></button></div>";
 		html += "</div>";
 
 		$("#board").append(html);
@@ -437,9 +439,10 @@ function getGametextTop(g, gameid) {
 		result = result[1];
 	}
 
-	var gameHeaderText = '<span class="boardergebnis">'+result+'</span><span class="schwarz" title="' + viewerText.black + '"></span><strong>' + h.Black + '</strong> ' + h.BlackElo + ((h.BlackTeam != undefined) ? '<br><span class="teamname">' + h.BlackTeam + '</span>' : '') + ((h.Board != undefined) ? ' <span class="board"> - ' + viewerText.board + ' ' + h.Board + '</span>' : '');
-	if(typeof pgnData[gameid]['BlackClock'] != 'undefined') gameHeaderText += ' <span class="clock"><span class="BlackClock" id="BlackClock'+gameid+'">'+pgnData[gameid]['BlackClock']+'</span></span>';
-	return gameHeaderText;
+	// clock floats before the team text, so it stays on line 2 when the header is cut to 3 lines
+	var clockHtml = (typeof pgnData[gameid]['BlackClock'] != 'undefined') ? '<span class="clock"><span class="BlackClock" id="BlackClock'+gameid+'">'+pgnData[gameid]['BlackClock']+'</span></span>' : '';
+	var gameHeaderText = '<div class="boardplayer"><span class="boardergebnis">'+result+'</span><span class="schwarz" title="' + viewerText.black + '"></span><strong>' + h.Black + '</strong> ' + h.BlackElo + ((h.BlackTeam != undefined) ? '<br>' + clockHtml + '<span class="teamname">' + h.BlackTeam + '</span>' : clockHtml) + ((h.Board != undefined) ? ' <span class="board"> - ' + viewerText.board + ' ' + h.Board + '</span>' : '');
+	return gameHeaderText + '</div>';
 }
 
 function getGametextButton(g, gameid) {
@@ -452,10 +455,10 @@ function getGametextButton(g, gameid) {
 		result = result[0];
 	}
 
-	var gameHeaderText = '<span class="boardergebnis">'+result+'</span><span class="weiss" title="' + viewerText.white + '"></span><strong>' + h.White + '</strong> ' + h.WhiteElo + ((h.WhiteTeam != undefined) ? '<br><span class="teamname">' + h.WhiteTeam + '</span>' : '') + ((h.Board != undefined) ? '<span class="board"> - ' + viewerText.board + ' ' + h.Board + '</span>' : '');
-	if(typeof pgnData[gameid]['WhiteClock'] != 'undefined') gameHeaderText += ' <span class="clock"><span class="WhiteClock" id="WhiteClock'+gameid+'">'+pgnData[gameid]['WhiteClock']+'</span></span>';
-
+	var clockHtml = (typeof pgnData[gameid]['WhiteClock'] != 'undefined') ? '<span class="clock"><span class="WhiteClock" id="WhiteClock'+gameid+'">'+pgnData[gameid]['WhiteClock']+'</span></span>' : '';
+	var gameHeaderText = '<div class="boardplayer"><span class="boardergebnis">'+result+'</span><span class="weiss" title="' + viewerText.white + '"></span><strong>' + h.White + '</strong> ' + h.WhiteElo + ((h.WhiteTeam != undefined) ? '<br>' + clockHtml + '<span class="teamname">' + h.WhiteTeam + '</span>' : clockHtml) + ((h.Board != undefined) ? '<span class="board"> - ' + viewerText.board + ' ' + h.Board + '</span>' : '');
 	gameHeaderText += '</div>';
+
 	var pgn = g.pgn();
 	var gameMoves = pgn.replace(/\[(.*?)\]/gm, '').replace(h.Result, '').trim();
 
@@ -506,41 +509,55 @@ function onChange(oldPos, newPos) {
 };
 
 function boardResizeInit(){
+	boardsPerRowPreferred = parseInt(jQuery('#boardsize').val(), 10) || 4;
+	boardsPerRowControlUpdate();
 	jQuery("#boardsize").on('change',function(){
-		var col = jQuery(this).val();
-		boardResize(col);
-		chessPgnViewerTrack('BoardResize', 'Change', col);
+		boardsPerRowPreferred = parseInt(jQuery(this).val(), 10) || 4;
+		boardResize(boardsPerRowPreferred);
+		chessPgnViewerTrack('BoardResize', 'Change', boardsPerRowPreferred);
 	});
 
 	$( window ).resize(function() {
+		boardsPerRowControlUpdate();
 		for(var key in board) {
 			board[key].resize();
 		}
 	});
-
 }
 
-function boardResize(col){
-	jQuery(".boarditem").removeClass("col-md-2 col-md-3 col-md-4 col-md-6 col-md-12 col-sm-2 col-sm-3 col-sm-4 col-sm-6 col-sm-12 col-xs-3 col-xs-4 col-xs-6");
-	switch(col) {
-	    case "2":
-					jQuery(".boarditem").addClass("col-md-2 col-sm-3"); break;
-	    case "3":
-	        jQuery(".boarditem").addClass("col-md-3 col-sm-3 col-xs-3"); break;
-			case "4":
-					jQuery(".boarditem").addClass("col-md-4 col-sm-4 col-xs-4"); break;
-			case "6":
-					jQuery(".boarditem").addClass("col-md-6 col-sm-6 col-xs-6"); break;
-			case "12":
-					jQuery(".boarditem").addClass("col-md-12");	break;
-	    default:
-	        jQuery(".boarditem").addClass(colselect);
-	}
+/*
+ * keep the select in sync with the CSS breakpoints (560px → 1, 740px → 2)
+ */
+function boardsPerRowMax() {
+	if (window.matchMedia('(max-width: 560px)').matches) return 1;
+	if (window.matchMedia('(max-width: 740px)').matches) return 2;
+	return 4;
+}
 
+function boardsPerRowControlUpdate() {
+	var max = boardsPerRowMax();
+	var label = jQuery('.pgnviewer-columns');
+	var select = jQuery('#boardsize');
+	if (max <= 1) {
+		label.hide();
+		boardResize(1);
+		return;
+	}
+	label.show();
+	select.find('option').each(function() {
+		this.hidden = parseInt(this.value, 10) > max;
+	});
+	var columns = Math.min(boardsPerRowPreferred, max);
+	select.val(String(columns));
+	boardResize(columns);
+}
+
+function boardResize(columns){
+	boardsPerRow = columns;
+	jQuery('#board').attr('data-columns', columns);
 	for(var key in board) {
 		board[key].resize();
 	}
-	colselect = "col-md-"+col;
 }
 /* Main Functions End */
 

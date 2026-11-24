@@ -32,17 +32,60 @@
 .pgnviewer-games label{display: block;margin: 0.25em 0;}
 .pgnviewer-games form{margin: 0;text-align: right;}
 
-.boarditem{margin-top:40px;}
-#board-buttons{margin-top: 5px;margin-bottom: 10px;overflow: auto;}
-#board-buttons button {display: inline;float: left;margin-right: 4px;}
+.chess-pgnviewer #board{
+	display: grid;
+	gap: 1.5rem;
+	margin-top: 1.5rem;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.chess-pgnviewer #board[data-columns="1"]{grid-template-columns: repeat(1, minmax(0, 1fr));}
+.chess-pgnviewer #board[data-columns="2"]{grid-template-columns: repeat(2, minmax(0, 1fr));}
+.chess-pgnviewer #board[data-columns="3"]{grid-template-columns: repeat(3, minmax(0, 1fr));}
+.chess-pgnviewer #board[data-columns="4"]{grid-template-columns: repeat(4, minmax(0, 1fr));}
+
+/* subgrid: header, board, footer etc. share row heights across a grid row */
+.boarditem{
+	min-width: 0;
+	display: grid;
+	grid-row: span 4;
+	grid-template-rows: subgrid;
+	/* an auto column would keep the width of the last drawn board */
+	grid-template-columns: minmax(0, 1fr);
+	row-gap: 0;
+}
 .highlight {background-color: #F3F315;}
-.boardbutton{text-align:left;padding:5px 0 15px;}
-.boardbutton button{margin-right:3px;}
+
+.boardbutton{display: flex;align-items: center;gap: .5em;padding-top: 8px;}
+.boardnav{display: inline-flex;}
+.boardnav button{
+	min-width: 1.9em;
+	height: 1.9em;
+	margin: 0;
+	padding: 0 .4em;
+	border: 1px solid #bbb;
+	background: #f6f6f6;
+	color: #333;
+	font: inherit;
+	font-size: 15px;
+	line-height: 1;
+	cursor: pointer;
+}
+.boardnav button + button{border-left-width: 0;}
+.boardnav button:first-child{border-radius: 4px 0 0 4px;}
+.boardnav button:last-child{border-radius: 0 4px 4px 0;}
+.boardnav button:hover{background: #e8e8e8;color: #000;}
+.boardnav button:active{background: #ddd;}
+.boardnav button:focus-visible{outline: 2px solid #06C;outline-offset: -2px;position: relative;}
 .boardtextbuttom, .boardtexttop{text-align:left;line-height:17px;font-size:14px;overflow:hidden;}
+/* hanging indent: lines after the first start under the name */
+.boardplayer{line-height: 17px;max-height: calc(3 * 17px);overflow: hidden;padding-left: 15px;text-indent: -15px;}
+.boardplayer > *{text-indent: 0;}
+/* smaller text on the baseline would add half a pixel per line */
+.boardplayer .teamname, .boardplayer .board, .boardplayer .clock{vertical-align: top;}
 .gameResult span{font-weight: bold;}
 .boardview{margin: 0px 0 5px;}
 span.clock{font-size: 12px;float: right;}
-span.teamname { margin-left: 15px;font-size: 12px; font-weight: bold;}
+span.teamname { font-size: 12px; font-weight: bold;}
 span.board{ font-size: 12px; }
 .boardergebnis{float:right;font-weight:bold;margin-left: 10px;}
 .move-highlight{-webkit-box-shadow: inset 0 0 3px 3px rgba(0, 0, 255, 0.5);;
@@ -51,67 +94,65 @@ span.board{ font-size: 12px; }
 }
 .refreshcountdown-cont{display: inline-block;}
 .chess-pgnviewer h3{float:left;}
-.btnStart,.btnPrevious,.btnNext,.btnEnd{padding: 2px 8px;}
-.gameNotation{height:100px; overflow-y: auto;margin: 10px 0;}
+.gameNotation{
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	clear: both;
+	height:100px;
+	overflow-y: auto;
+	margin: 8px 0 0;
+}
 .gameNotation .curmove a{font-weight:bold;color:#000;}
 #board.nonotation .gameNotation{display:none;}
-.boardclose{font-weight: bold;cursor: pointer;float:right;font-size: 13px;padding-top: 5px;}
+.boardclose{
+	margin: 0 0 0 auto;
+	padding: .25em 0;
+	border: 0;
+	background: none;
+	color: #555;
+	font: inherit;
+	font-size: 13px;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.boardclose:hover{color: #000;text-decoration: underline;}
+.boardclose-icon{display: none;}
 
-.boarditem .schwarz, .boarditem .weiss{display: inline-block;width: 10px;height: 10px;background:#000000;margin-right: 5px;}
+.boarditem .schwarz, .boarditem .weiss{display: inline-block;width: 10px;height: 10px;background:#000000;margin-right: 5px;box-sizing: border-box;}
 .boarditem .weiss{background: #ffffff;display: inline-block;border: 1px solid #000000;}
 
-.row {margin-left: -15px; margin-right: -15px;}
-.boarditem{position: relative;min-height: 1px;padding-left: 15px;padding-right: 15px;}
-.boarditem.col-md-12{width:100%;}
-.boarditem.col-md-6{width:50%;float: left;}
-.boarditem.col-md-4{width:33%;float: left;}
-.boarditem.col-md-3{width:25%;float: left;}
-
-.col-md-3 strong{
+/* leave room on line 1 for colour square, Elo and result */
+.boarditem strong{
   display: inline-block;
   text-overflow: ellipsis;
-  max-width: 156px;
+  max-width: calc(100% - 6em);
   white-space: nowrap;
   overflow: hidden;
-  margin-bottom: -5px;
+  vertical-align: bottom;
 }
 
-@media (max-width: 1200px){
-  .col-md-3 strong{
-      max-width: 96px;
-  }
-}
-
-@media (max-width: 1024px){
-  .col-md-3 strong{
-    max-width: 180px;
-    display: block;
-  }
-}
-
-@media (max-width: 1200px){
-  .boarditem.col-md-2{
-    width:25%;
-    float: left;
+/* theme zeroes .text side padding below 640px; paragraphs keep .75rem */
+@media (max-width: 640px){
+  .chess-pgnviewer{
+    padding-left: .75rem;
+    padding-right: .75rem;
+    box-sizing: border-box;
   }
 }
 
 @media (max-width: 740px){
-  .boarditem.col-md-3, .boarditem.col-md-2{
-    width:33%;
-    float: left;
+  .chess-pgnviewer #board[data-columns="3"],
+  .chess-pgnviewer #board[data-columns="4"]{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .pgnviewer-columns{display: none;}
+  .boardclose-text{display: none;}
+  .boardclose-icon{display: inline;font-size: 1.5em;line-height: 1;}
+  .boardclose:hover{text-decoration: none;}
 }
 
 @media (max-width: 560px){
-  .boarditem.col-md-4, .boarditem.col-md-3, .boarditem.col-md-2{
-    width:50%;
-    float: left;
+  .chess-pgnviewer #board[data-columns]{
+    grid-template-columns: minmax(0, 1fr);
   }
-
-}
-
-.ddddboardview {
-    width: 70%;
 }
