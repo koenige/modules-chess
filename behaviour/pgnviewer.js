@@ -51,19 +51,33 @@ $( document ).ready(function() {
 	boardResizeInit();
 	notationInit();
 	gameChooserInit();
-	var i = 0;
-	for(var key in gamesTurnier) {
-	 gamesTurnier[key].forEach(function(item){
-		 if(i >= maxStartBoards){
- 			return;
- 		}
- 		i++;
-		gameShow(item);
-	 });
-	 getAjaxRequest(false);
-	 return;
+	var gameids = pgnStartGameIds();
+	if (!gameids.length) return;
+	var limit = pgnStartLimit(gameids.length);
+	for (var i = 0; i < limit; i++) {
+		gameShow(gameids[i]);
 	}
+	getAjaxRequest(false);
 });
+
+function pgnStartGameIds() {
+	var gameids = [];
+	for (var key in gamesTurnier) {
+		if (!gamesTurnier.hasOwnProperty(key)) continue;
+		gamesTurnier[key].forEach(function(gameid) {
+			gameids.push(gameid);
+		});
+	}
+	return gameids;
+}
+
+/*
+ * open every board when there are at most twice the initial count
+ */
+function pgnStartLimit(count) {
+	if (count <= maxStartBoards * 2) return count;
+	return maxStartBoards;
+}
 
 /* Main Functions Begin */
 function notationInit(){

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- chess module\n"
-"POT-Creation-Date: 2026-11-24 20:21+0000\n"
+"POT-Creation-Date: 2026-11-24 23:01+0000\n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -37,7 +37,7 @@ msgid "Standard PGN [Termination] header value for this category"
 msgstr ""
 
 #: configuration/settings.cfg:65
-msgid "How many boards to open initially in the interactive viewer"
+msgid "How many boards to open initially. All games are opened when there are at most twice this many."
 msgstr ""
 
 #: configuration/settings.cfg:70
