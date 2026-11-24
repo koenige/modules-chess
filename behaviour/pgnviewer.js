@@ -151,7 +151,7 @@ function gameChooserLabel(gameid){
 function gameShow(gameid){
 	newBoard(gameid);
 	jQuery('#boardcont'+gameid).show();
-	board[gameid].resize();
+	boardRedraw(gameid);
 	shownGames[gameid] = true;
 }
 
@@ -316,7 +316,9 @@ function newBoard(gameid){
 			pieceTheme: pieceTheme,
 		  position: 'start',
 		  showNotation: false,
-		  onChange: onChange ,
+		  onChange: function() {
+			markLastMove(gameid);
+		  },
 		  gameid: gameid
 		};
 
@@ -513,14 +515,6 @@ function goToMove(ply, gameid) {
 	jQuery(".gameMove"+(i-1)+"-"+gameid).addClass("curmove");
 }
 
-function onChange(oldPos, newPos) {
-	$("#board"+this.gameid).find('.move-highlight').removeClass("move-highlight");
-	var lastmove = gameHistory[this.gameid][ gameHistory[this.gameid].length - 1];
-
-	$("#board"+this.gameid).find('.square-' + lastmove.from).addClass('move-highlight');
-	$("#board"+this.gameid).find('.square-' + lastmove.to).addClass('move-highlight');
-};
-
 function boardResizeInit(){
 	boardsPerRowPreferred = parseInt(jQuery('#boardsize').val(), 10) || 4;
 	boardsPerRowControlUpdate();
@@ -533,7 +527,7 @@ function boardResizeInit(){
 	$( window ).resize(function() {
 		boardsPerRowControlUpdate();
 		for(var key in board) {
-			board[key].resize();
+			boardRedraw(key);
 		}
 	});
 }
@@ -569,8 +563,28 @@ function boardResize(columns){
 	boardsPerRow = columns;
 	jQuery('#board').attr('data-columns', columns);
 	for(var key in board) {
-		board[key].resize();
+		boardRedraw(key);
 	}
+}
+
+function boardRedraw(key) {
+	if (!board[key] || typeof board[key].resize !== 'function') return;
+	board[key].resize();
+	markLastMove(key);
+}
+
+/*
+ * mark the move that led to the position on screen; resize rebuilds the squares
+ */
+function markLastMove(gameid) {
+	var boardEl = jQuery('#board'+gameid);
+	boardEl.find('.move-highlight').removeClass('move-highlight');
+	var ply = currentPly[gameid];
+	if (typeof ply !== 'number' || ply < 0) return;
+	var move = gameHistory[gameid][ply];
+	if (!move) return;
+	boardEl.find('.square-' + move.from).addClass('move-highlight');
+	boardEl.find('.square-' + move.to).addClass('move-highlight');
 }
 /* Main Functions End */
 
