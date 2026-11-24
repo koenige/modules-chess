@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- chess module\n"
-"POT-Creation-Date: 2026-11-24 22:38+0000\n"
+"POT-Creation-Date: 2026-11-24 22:44+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Gustaf Mossakowski <gustaf@koenige.org>\n"
 "Language-Team: \n"
@@ -218,5 +218,9 @@ msgid "Go to start"
 msgstr "Zum Anfang"
 
 #: templates/pgnviewer.template.txt:55
+msgid "unknown"
+msgstr "unbekannt"
+
+#: templates/pgnviewer.template.txt:56
 msgid "White"
 msgstr "Weiß"

@@ -52,6 +52,7 @@ var chessPgnViewerConfig = {
 		seconds: "%%% text sec %%%",
 		toEnd: "%%% text Go to end %%%",
 		toStart: "%%% text Go to start %%%",
+		unknown: "%%% text unknown %%%",
 		white: "%%% text White %%%"
 	}
 };

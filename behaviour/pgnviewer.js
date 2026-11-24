@@ -211,11 +211,11 @@ function pgnFromUrl(url, linkId) { 			// analyzes the imported PGN file
 
 				if(matches != null){
 					if(matches.length%2==0){
-						pgnDataTemp[k]['BlackClock'] = matches.pop().replaceAll('"', '');
-						pgnDataTemp[k]['WhiteClock'] = matches.pop().replaceAll('"', '');
+						pgnDataTemp[k]['BlackClock'] = pgnClockValue(matches);
+						pgnDataTemp[k]['WhiteClock'] = pgnClockValue(matches);
 					}else{
-						pgnDataTemp[k]['WhiteClock'] = matches.pop().replaceAll('"', '');
-						pgnDataTemp[k]['BlackClock'] = matches.pop().replaceAll('"', '');
+						pgnDataTemp[k]['WhiteClock'] = pgnClockValue(matches);
+						pgnDataTemp[k]['BlackClock'] = pgnClockValue(matches);
 					}
 				}
 				var gameidTemp = pgnGameId(linkId, pgnDataTemp[k], position);
@@ -265,6 +265,15 @@ function pgnFromUrl(url, linkId) { 			// analyzes the imported PGN file
 function pgnGameId(linkId, gameData, position) {
 	var parts = [linkId, gameData['Round'] || '', gameData['Board'] || position];
 	return parts.join('-').replace(/[^A-Za-z0-9_-]+/g, '-').replace(/-+$/, '');
+}
+
+/*
+ * last clock comment, or the translated "unknown" when that side has none
+ */
+function pgnClockValue(matches) {
+	var clock = matches.pop();
+	if (!clock) return viewerText.unknown;
+	return clock.replaceAll('"', '');
 }
 
 function newBoardFromHTML(gameid, pgn){
@@ -418,15 +427,19 @@ function loadAjaxGame(gameid) {
 		}
 
 		if(fenNew[1]=='w'){
-			if(pgnData[gameid]["WhiteClock"] != undefined){
+			if(pgnClockTicks(pgnData[gameid]["WhiteClock"])){
 				countdownStart("WhiteClock"+gameid, countdownParse(pgnData[gameid]["WhiteClock"]), countdownClock);
 			}
 		}else{
-			if(pgnData[gameid]["BlackClock"] != undefined){
+			if(pgnClockTicks(pgnData[gameid]["BlackClock"])){
 				countdownStart("BlackClock"+gameid, countdownParse(pgnData[gameid]["BlackClock"]), countdownClock);
 			}
 		}
 	}
+}
+
+function pgnClockTicks(clock) {
+	return typeof clock === 'string' && /^\d+:\d+:\d+$/.test(clock);
 }
 
 function getGametextTop(g, gameid) {
