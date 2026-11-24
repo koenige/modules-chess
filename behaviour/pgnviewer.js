@@ -24,6 +24,7 @@ var gameNotation = [];
 var turnier = '';
 var partie = '';
 var clocks = [];
+var countdowns = {};
 var chessPgnViewerConfig = window.chessPgnViewerConfig || {};
 var refreshrate = chessPgnViewerConfig.refreshSeconds || 60;
 var maxStartBoards = chessPgnViewerConfig.maxStartBoards || 12;
@@ -375,7 +376,7 @@ function newBoard(gameid){
 }
 
 function getAjaxRequest(loadpgn){
-	clearInterval(window["timer_Srefreshcountdown"]);
+	countdownStop('refreshcountdown');
 
 	jQuery(".refreshloader").show();
 	jQuery("#refreshcountdown").hide();
@@ -395,13 +396,13 @@ function getAjaxRequest(loadpgn){
 
 	jQuery(".refreshloader").hide();
 	jQuery("#refreshcountdown").show();
-	jQuery("#refreshcountdown").countdowntimer({"seconds":refreshrate,stopButton:"stopBtnhms",timeUp:getAjaxRequest});
+	countdownStart('refreshcountdown', refreshrate, countdownSeconds, getAjaxRequest);
 	jQuery(".refreshcountdown-cont").show();
 }
 
 function loadAjaxGame(gameid) {
-	clearInterval(window["timer_HMSBlackClock"+gameid]);
-	clearInterval(window["timer_HMSWhiteClock"+gameid]);
+	countdownStop("BlackClock"+gameid);
+	countdownStop("WhiteClock"+gameid);
 
 	var fenAct = game[gameid].fen().split(" ");
 
@@ -434,13 +435,11 @@ function loadAjaxGame(gameid) {
 
 		if(fenNew[1]=='w'){
 			if(pgnData[gameid]["WhiteClock"] != undefined){
-				var WhiteClockParts = pgnData[gameid]["WhiteClock"].split(":");
-				$("#WhiteClock"+gameid).countdowntimer({"hours":WhiteClockParts[0],"minutes":WhiteClockParts[1],"seconds":WhiteClockParts[2]});
+				countdownStart("WhiteClock"+gameid, countdownParse(pgnData[gameid]["WhiteClock"]), countdownClock);
 			}
 		}else{
 			if(pgnData[gameid]["BlackClock"] != undefined){
-				var BlackClockParts = pgnData[gameid]["BlackClock"].split(":");
-				$("#BlackClock"+gameid).countdowntimer({"hours":BlackClockParts[0],"minutes":BlackClockParts[1],"seconds":BlackClockParts[2]});
+				countdownStart("BlackClock"+gameid, countdownParse(pgnData[gameid]["BlackClock"]), countdownClock);
 			}
 		}
 	}
@@ -570,6 +569,52 @@ function prozessLine(temp, label){
 	temp = temp.replace("]","");
 	temp = temp.replace(new RegExp('"', 'g'),"");
 	return temp;
+}
+
+/*
+ * counts down once per second, writes the formatted time into the element
+ * and calls timeUp after 0; elements may be replaced while running
+ */
+function countdownStart(elementId, seconds, format, timeUp) {
+	countdownStop(elementId);
+	var tick = function() {
+		var element = document.getElementById(elementId);
+		if (!element) {
+			countdownStop(elementId);
+			return;
+		}
+		element.textContent = format(seconds);
+		seconds--;
+		if (seconds >= 0) return;
+		countdownStop(elementId);
+		if (timeUp) timeUp();
+	};
+	tick();
+	countdowns[elementId] = setInterval(tick, 1000);
+}
+
+function countdownStop(elementId) {
+	clearInterval(countdowns[elementId]);
+	delete countdowns[elementId];
+}
+
+function countdownParse(time) {
+	var parts = time.split(':');
+	return parts[0] * 3600 + parts[1] * 60 + parts[2] * 1;
+}
+
+function countdownSeconds(seconds) {
+	return countdownPad(seconds) + ' sec';
+}
+
+function countdownClock(seconds) {
+	var hours = Math.floor(seconds / 3600);
+	var minutes = Math.floor(seconds / 60) % 60;
+	return countdownPad(hours) + ':' + countdownPad(minutes) + ':' + countdownPad(seconds % 60);
+}
+
+function countdownPad(number) {
+	return (number < 10 ? '0' : '') + number;
 }
 
 function clock(gameid, color) {

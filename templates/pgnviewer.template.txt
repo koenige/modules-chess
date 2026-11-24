@@ -60,5 +60,4 @@ pgnlink.push({url: "%%% item url %%%", id: "%%% item id %%%"});
 <script src="%%% setting behaviour_path %%%/chessboardjs/releases/0.3.0/js/chessboard-0.3.0.min.js"></script>
 <script src="%%% setting behaviour_path %%%/chess.js/chess.min.js"></script>
 %%% script chess/chosen/chosen.jquery.min.js %%%
-%%% script jquery-countdownTimer/jquery.countdownTimer.js %%%
 %%% script chess/pgnviewer.js %%%
