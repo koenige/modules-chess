@@ -1,0 +1,84 @@
+.chess-pgnviewer{min-height:500px;}
+.boarditem{margin-top:40px;}
+#board-buttons{margin-top: 5px;margin-bottom: 10px;overflow: auto;}
+#board-buttons button {display: inline;float: left;margin-right: 4px;}
+.highlight {background-color: #F3F315;}
+.boardbutton{text-align:left;padding:5px 0 15px;}
+.boardbutton button{margin-right:3px;}
+.boardtextbuttom, .boardtexttop{text-align:left;line-height:17px;font-size:14px;overflow:hidden;}
+.gameResult span{font-weight: bold;}
+.boardview{margin: 0px 0 5px;}
+span.clock{font-size: 12px;float: right;}
+span.teamname { margin-left: 15px;font-size: 12px; font-weight: bold;}
+span.board{ font-size: 12px; }
+.boardergebnis{float:right;font-weight:bold;margin-left: 10px;}
+.move-highlight{-webkit-box-shadow: inset 0 0 3px 3px rgba(0, 0, 255, 0.5);;
+  -moz-box-shadow: inset 0 0 3px 3px rgba(0, 0, 255, 0.5);;
+  box-shadow: inset 0 0 3px 3px rgba(0, 0, 255, 0.5);;
+}
+.refreshcountdown-cont{display: inline-block;}
+.chess-pgnviewer h3{float:left;}
+.btnStart,.btnPrevious,.btnNext,.btnEnd{padding: 2px 8px;}
+.gameNotation{height:100px; overflow-y: auto;margin: 10px 0;}
+.gameNotation .curmove a{font-weight:bold;color:#000;}
+#board.nonotation .gameNotation{display:none;}
+.boardclose{font-weight: bold;cursor: pointer;float:right;font-size: 13px;padding-top: 5px;}
+.search-choice{display: none;}
+
+.boarditem .schwarz, .boarditem .weiss{display: inline-block;width: 10px;height: 10px;background:#000000;margin-right: 5px;}
+.boarditem .weiss{background: #ffffff;display: inline-block;border: 1px solid #000000;}
+
+.row {margin-left: -15px; margin-right: -15px;}
+.boarditem{position: relative;min-height: 1px;padding-left: 15px;padding-right: 15px;}
+.boarditem.col-md-12{width:100%;}
+.boarditem.col-md-6{width:50%;float: left;}
+.boarditem.col-md-4{width:33%;float: left;}
+.boarditem.col-md-3{width:25%;float: left;}
+
+.col-md-3 strong{
+  display: inline-block;
+  text-overflow: ellipsis;
+  max-width: 156px;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: -5px;
+}
+
+@media (max-width: 1200px){
+  .col-md-3 strong{
+      max-width: 96px;
+  }
+}
+
+@media (max-width: 1024px){
+  .col-md-3 strong{
+    max-width: 180px;
+    display: block;
+  }
+}
+
+@media (max-width: 1200px){
+  .boarditem.col-md-2{
+    width:25%;
+    float: left;
+  }
+}
+
+@media (max-width: 740px){
+  .boarditem.col-md-3, .boarditem.col-md-2{
+    width:33%;
+    float: left;
+  }
+}
+
+@media (max-width: 560px){
+  .boarditem.col-md-4, .boarditem.col-md-3, .boarditem.col-md-2{
+    width:50%;
+    float: left;
+  }
+
+}
+
+.ddddboardview {
+    width: 70%;
+}

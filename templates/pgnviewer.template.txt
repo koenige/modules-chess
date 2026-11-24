@@ -1,0 +1,65 @@
+# chess module
+# HTML output: interactive multi-board PGN viewer
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/chess
+#
+# Ported from TYPO3 extension ek_pgn_viewer (Erik Kothe).
+#
+# @author Erik Kothe <kontakt@erikkothe.de>
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2017 Erik Kothe, 2026 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+<div class="chess-pgnviewer">
+<div class="row">
+  <div class="col col-md-6">
+    <div id="gameSelectCont"></div>
+    <img style="display:none;" class="refreshloader" src="%%% setting layout_path %%%/chess/pgnviewer-loader.gif" alt="">
+    <div style="display:none;" class="refreshcountdown-cont">aktualisiert in <span id="refreshcountdown"></span></div>
+  </div>
+  <div class="col col-md-3">
+    <div id="turnierSelectCont"></div>
+    <div id="teamPaaringsSelectCont"></div>
+  </div>
+  <div class="col col-md-3">
+    <select id="boardsize">
+      <option>Brettgröße wählen</option>
+      <option value="12">1 Brett pro Zeile</option>
+      <option value="6">2 Bretter pro Zeile</option>
+      <option value="4">3 Bretter pro Zeile</option>
+      <option value="3">4 Bretter pro Zeile</option>
+    </select>
+  </div>
+  <div class="col col-md-12">
+    <div id="board" class="row"></div>
+  </div>
+  <div class="col col-md-12">
+    <span><input id="notation" type="checkbox" name="notation" value="true" checked="checked"> Notation an</span>
+  </div>
+  <div class="col col-md-12" style="text-align:center;">
+    <span><strong>Weitere Partien können Sie über die Partieauswahl am Anfang der Seite auswählen.</strong></span>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+var chessPgnViewerConfig = {
+	pieceTheme: "%%% item piece_theme %%%",
+	refreshSeconds: %%% item refresh_seconds %%%,
+	maxStartBoards: %%% item max_start_boards %%%
+};
+var pgnlink = [];
+%%% loop pgn_links %%%
+pgnlink.push("%%% item url %%%");
+%%% loop end %%%
+</script>
+%%% if with_jquery %%%
+<script src="%%% setting behaviour_path %%%/jquery/jquery.min.js"></script>
+%%% endif %%%
+<script src="%%% setting behaviour_path %%%/chessboardjs/releases/0.3.0/js/chessboard-0.3.0.min.js"></script>
+<script src="%%% setting behaviour_path %%%/chess.js/chess.min.js"></script>
+%%% script chess/md5.js %%%
+%%% script chess/chosen/chosen.jquery.min.js %%%
+%%% script jquery-countdownTimer/jquery.countdownTimer.js %%%
+%%% script chess/pgnviewer.js %%%

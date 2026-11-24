@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- chess module\n"
-"POT-Creation-Date: 2026-07-31 09:59+0000\n"
+"POT-Creation-Date: 2026-11-24 20:21+0000\n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -17,23 +17,39 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: configuration/settings.cfg:20
+msgid "Custom PGN [EventType] header value for this category"
+msgstr ""
+
+#: configuration/settings.cfg:33
 msgid "List of possible game endings"
 msgstr ""
 
-#: configuration/settings.cfg:28
+#: configuration/settings.cfg:41
 msgid "Prefix for ID of game"
 msgstr ""
 
-#: configuration/settings.cfg:32
+#: configuration/settings.cfg:45
 msgid "Display names first name last name, not last, first"
-msgstr ""
-
-#: configuration/settings.cfg:37
-msgid "Custom PGN [EventType] header value for this category"
 msgstr ""
 
 #: configuration/settings.cfg:50
 msgid "Standard PGN [Termination] header value for this category"
+msgstr ""
+
+#: configuration/settings.cfg:65
+msgid "How many boards to open initially in the interactive viewer"
+msgstr ""
+
+#: configuration/settings.cfg:70
+msgid "Piece image URL template for chessboard.js ({piece} placeholder)"
+msgstr ""
+
+#: configuration/settings.cfg:74
+msgid "Live PGN refresh interval for the interactive viewer (seconds)"
+msgstr ""
+
+#: configuration/settings.cfg:79
+msgid "Include jQuery with the interactive PGN viewer (needed unless already on the page)"
 msgstr ""
 
 #: zzbrick_request/chessgames.inc.php:48

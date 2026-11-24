@@ -1,0 +1,30 @@
+#board-buttons {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  overflow: auto;
+}
+
+#board-buttons button {
+  display: inline;
+  float: left;
+  margin-right: 4px;
+}
+
+.highlight {
+  background-color: #F3F315;
+}
+
+.boarditem{margin-right:2%;width:250px;float:left;min-height:410px;}
+.boardbutton{text-align: center;padding:5px 0 15px;}
+.boardbutton button{margin-right:3px;}
+.boardtextbuttom, .boardtexttop{text-align:left;line-height:16px;font-size: 15px;}
+.gameResult span{font-weight: bold;}
+.boardview{margin:10px 0;}
+span.clock{margin-left: 13px;font-size: 12px;}
+.boardergebnis{float:right;font-weight:bold;}
+
+.move-highlight{
+  -webkit-box-shadow: inset 0 0 3px 3px rgba(0, 0, 255, 0.5);;
+  -moz-box-shadow: inset 0 0 3px 3px rgba(0, 0, 255, 0.5);;
+  box-shadow: inset 0 0 3px 3px rgba(0, 0, 255, 0.5);;  
+}
