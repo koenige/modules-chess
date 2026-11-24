@@ -12,42 +12,48 @@
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <div class="chess-pgnviewer">
-<div class="row">
-  <div class="col col-md-6">
-    <div id="gameSelectCont"></div>
-    <img style="display:none;" class="refreshloader" src="%%% setting layout_path %%%/chess/pgnviewer-loader.gif" alt="">
-    <div style="display:none;" class="refreshcountdown-cont">aktualisiert in <span id="refreshcountdown"></span></div>
-  </div>
-  <div class="col col-md-3">
-    <div id="turnierSelectCont"></div>
-    <div id="teamPaaringsSelectCont"></div>
-  </div>
-  <div class="col col-md-3">
+<div class="pgnviewer-toolbar">
+  <button type="button" id="gameChooserOpen">%%% text Choose games %%%</button>
+  <label class="pgnviewer-columns">%%% text Boards per row %%%
     <select id="boardsize">
-      <option>Brettgröße wählen</option>
-      <option value="12">1 Brett pro Zeile</option>
-      <option value="6">2 Bretter pro Zeile</option>
-      <option value="4">3 Bretter pro Zeile</option>
-      <option value="3">4 Bretter pro Zeile</option>
+      <option value="12">1</option>
+      <option value="6">2</option>
+      <option value="4">3</option>
+      <option value="3" selected>4</option>
     </select>
-  </div>
-  <div class="col col-md-12">
-    <div id="board" class="row"></div>
-  </div>
-  <div class="col col-md-12">
-    <span><input id="notation" type="checkbox" name="notation" value="true" checked="checked"> Notation an</span>
-  </div>
-  <div class="col col-md-12" style="text-align:center;">
-    <span><strong>Weitere Partien können Sie über die Partieauswahl am Anfang der Seite auswählen.</strong></span>
-  </div>
+  </label>
+  <label><input id="notation" type="checkbox" checked> %%% text Show notation %%%</label>
+  <span class="pgnviewer-refresh">
+    <img style="display:none;" class="refreshloader" src="%%% setting layout_path %%%/chess/pgnviewer-loader.gif" alt="">
+    <span style="display:none;" class="refreshcountdown-cont">%%% text Next update in %%% <span id="refreshcountdown"></span></span>
+  </span>
 </div>
+<div id="board" class="row"></div>
+<dialog id="gameChooser" class="pgnviewer-games" aria-labelledby="gameChooserTitle">
+  <h2 id="gameChooserTitle">%%% text Choose games %%%</h2>
+  <div id="gameSelectCont"></div>
+  <form method="dialog"><button>%%% text Close %%%</button></form>
+</dialog>
 </div>
 
 <script type="text/javascript">
 var chessPgnViewerConfig = {
 	pieceTheme: "%%% item piece_theme %%%",
 	refreshSeconds: %%% item refresh_seconds %%%,
-	maxStartBoards: %%% item max_start_boards %%%
+	maxStartBoards: %%% item max_start_boards %%%,
+	text: {
+		black: "%%% text Black %%%",
+		board: "%%% text Board %%%",
+		closeBoard: "%%% text Close board %%%",
+		live: "%%% text Live %%%",
+		nextMove: "%%% text Next move %%%",
+		onlyThese: "%%% text Show only these %%%",
+		previousMove: "%%% text Previous move %%%",
+		seconds: "%%% text sec %%%",
+		toEnd: "%%% text Go to end %%%",
+		toStart: "%%% text Go to start %%%",
+		white: "%%% text White %%%"
+	}
 };
 var pgnlink = [];
 %%% loop pgn_links %%%
@@ -59,5 +65,4 @@ pgnlink.push({url: "%%% item url %%%", id: "%%% item id %%%"});
 %%% endif %%%
 <script src="%%% setting behaviour_path %%%/chessboardjs/releases/0.3.0/js/chessboard-0.3.0.min.js"></script>
 <script src="%%% setting behaviour_path %%%/chess.js/chess.min.js"></script>
-%%% script chess/chosen/chosen.jquery.min.js %%%
 %%% script chess/pgnviewer.js %%%

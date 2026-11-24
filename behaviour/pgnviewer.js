@@ -30,10 +30,11 @@ var refreshrate = chessPgnViewerConfig.refreshSeconds || 60;
 var maxStartBoards = chessPgnViewerConfig.maxStartBoards || 12;
 var pieceTheme = chessPgnViewerConfig.pieceTheme
 	|| '/_behaviour/chessboardjs/releases/0.3.0/img/chesspieces/wikipedia/{piece}.png';
+var viewerText = chessPgnViewerConfig.text || {};
 var pgnurl = '';
 var colselect = 'col-md-3 col-sm-3 col-xs-3';
 var teamPaarings = [];
-var teamExists = false;
+var shownGames = {};
 
 function chessPgnViewerTrack(category, action, label) {
 	if (typeof ga === 'function') {
@@ -46,11 +47,9 @@ $( document ).ready(function() {
 		pgnFromUrl(item.url, item.id);
 	});
 	//getAjaxRequest(false);
-	buildSelectGame();
 	boardResizeInit();
-	//buildSelectTurnier(); //Auskommentiert für die Mannschaften
-	if(teamExists) buildSelectTeamPaarings();
 	notationInit();
+	gameChooserInit();
 	var i = 0;
 	for(var key in gamesTurnier) {
 	 gamesTurnier[key].forEach(function(item){
@@ -58,7 +57,7 @@ $( document ).ready(function() {
  			return;
  		}
  		i++;
-		loadAlterklasse(item);
+		gameShow(item);
 	 });
 	 getAjaxRequest(false);
 	 return;
@@ -76,102 +75,88 @@ function notationInit(){
 	});
 }
 
-function buildSelectGame(){
-	var selectOption = {};
-	for(var key in pgnData) {
-		var eventname = pgnData[key]['Event'];
-		 if(selectOption[eventname] == undefined){
-			selectOption[eventname] = '';
-		 }
-		 var result = pgnData[key]['Result'];
-		 if(result == '*'){
-			 result = 'Live';
-		 }
-		 if(pgnData[key]['WhiteTeam'] != '' && pgnData[key]['BlackTeam']){
-			 selectOption[eventname] += '<option value="'+key+'">'+pgnData[key]['White']+' ('+ pgnData[key]['WhiteTeam'] +') - '+pgnData[key]['Black']+' ('+ pgnData[key]['BlackTeam'] +') : '+result+'</option>';
-		 }else{
-			 selectOption[eventname] += '<option value="'+key+'">'+pgnData[key]['White']+' - '+pgnData[key]['Black']+' : '+result+'</option>';
-		 }
-	}
-	var selectOptionHtml = '';
-	for(var key in selectOption) {
-		selectOptionHtml += '<optgroup label="'+key+'">'+selectOption[key]+'</optgroup>';
-	}
-	selectOptionHtml = '<select class="" id="gameSelect" multiple="multiple">'+selectOptionHtml+'</select>';
-
-	jQuery('#gameSelectCont').html(selectOptionHtml);
-
-	jQuery('#gameSelect').on('change',function(){
-		jQuery('.boarditem').hide();
-		if(jQuery(this).val() != null){
-			jQuery(this).val().forEach(function(item){
-				newBoard(item);
-				jQuery('#boardcont'+item).show();
-				board[item].resize();
-
-			});
-			chessPgnViewerTrack('GameChange', 'Change', '');
-		}
+function gameChooserInit(){
+	var dialog = document.getElementById('gameChooser');
+	jQuery('#gameChooserOpen').on('click', function(){
+		buildGameChooser();
+		dialog.showModal();
 	});
-	$("#gameSelect").chosen({width: "95%",placeholder_text_multiple:"Partienauswahl"});
+	// click on the backdrop closes the dialog
+	jQuery(dialog).on('click', function(event){
+		if (event.target === dialog) dialog.close();
+	});
+	jQuery('#gameSelectCont').on('change', 'input[type=checkbox]', function(){
+		if (this.checked) gameShow(this.value);
+		else gameHide(this.value);
+		chessPgnViewerTrack('GameChange', 'Change', '');
+	});
+	jQuery('#gameSelectCont').on('click', '.pgnviewer-only', function(){
+		var group = jQuery(this).closest('fieldset');
+		var gameids = group.find('input[type=checkbox]').map(function(){ return this.value; }).get();
+		Object.keys(shownGames).forEach(function(gameid){
+			if (gameids.indexOf(gameid) === -1) gameHide(gameid);
+		});
+		gameids.forEach(gameShow);
+		chessPgnViewerTrack('GroupChange', 'Change', group.find('legend .label').text());
+		dialog.close();
+	});
 }
 
-function buildSelectTurnier(){
-	var selectOption = '<option>Alterklasse wählen</option>';
-	var i=0;
-	for(var key in gamesTurnier) {
-		if(i==0){
-			selectOption += '<option value="'+key+'" selected="selected">'+key+'</option>';
-		}else{
-			selectOption += '<option value="'+key+'">'+key+'</option>';
-		}
-		i++;
+/*
+ * one group per tournament, or per team pairing in team tournaments
+ */
+function buildGameChooser(){
+	var pairingOf = {};
+	for (var pairing in teamPaarings) {
+		teamPaarings[pairing].forEach(function(gameid){ pairingOf[gameid] = pairing; });
 	}
-	selectOption = '<select id="turnierSelect">'+selectOption+'</select>';
-	jQuery('#turnierSelectCont').html(selectOption);
+	var groups = {};
+	var order = [];
+	for (var eventname in gamesTurnier) {
+		gamesTurnier[eventname].forEach(function(gameid){
+			var label = pairingOf[gameid] ? eventname + ': ' + pairingOf[gameid] : eventname;
+			if (!groups[label]) {
+				groups[label] = [];
+				order.push(label);
+			}
+			groups[label].push(gameid);
+		});
+	}
 
-	jQuery('#turnierSelect').on('change',function(){
-		if(jQuery(this).val() != null){
-			jQuery('.boarditem').hide();
-			gamesTurnier[jQuery(this).val()].forEach(function(item){
-				loadAlterklasse(item);
-			});
-			chessPgnViewerTrack('AlterklasseChange', 'Change', jQuery(this).val());
-		};
+	var container = jQuery('#gameSelectCont').empty();
+	order.forEach(function(label){
+		var legend = jQuery('<legend>').append(
+			jQuery('<span class="label">').text(label),
+			' ',
+			jQuery('<button type="button" class="pgnviewer-only">').text(viewerText.onlyThese)
+		);
+		var fieldset = jQuery('<fieldset>').append(legend);
+		groups[label].forEach(function(gameid){
+			var input = jQuery('<input type="checkbox">').val(gameid).prop('checked', !!shownGames[gameid]);
+			fieldset.append(jQuery('<label>').append(input, ' ', document.createTextNode(gameChooserLabel(gameid))));
+		});
+		container.append(fieldset);
 	});
-	$("#turnierSelect").chosen({disable_search:true,width: "90%"});
 }
 
-function buildSelectTeamPaarings(){
-	var selectOption = '<option>Begegnung wählen</option>';
-	var i=0;
-	for(var key in teamPaarings) {
-		if(i==0){
-			selectOption += '<option value="'+key+'" selected="selected">'+key+'</option>';
-		}else{
-			selectOption += '<option value="'+key+'">'+key+'</option>';
-		}
-		i++;
-	}
-	selectOption = '<select id="teamPaaringsSelect">'+selectOption+'</select>';
-	jQuery('#teamPaaringsSelectCont').html(selectOption);
-
-	jQuery('#teamPaaringsSelect').on('change',function(){
-		if(jQuery(this).val() != null){
-			jQuery('.boarditem').hide();
-			teamPaarings[jQuery(this).val()].forEach(function(item){
-				loadAlterklasse(item);
-			});
-			chessPgnViewerTrack('teamPaaringChange', 'Change', jQuery(this).val());
-		};
-	});
-	$("#teamPaaringsSelect").chosen({disable_search:true,width: "90%"});
+function gameChooserLabel(gameid){
+	var data = pgnData[gameid];
+	var result = data['Result'] == '*' ? viewerText.live : data['Result'];
+	var label = data['White'] + ' – ' + data['Black'] + ' (' + result + ')';
+	if (!data['Board']) return label;
+	return viewerText.board + ' ' + data['Board'] + ': ' + label;
 }
 
-function loadAlterklasse(item){
-	newBoard(item);
-	jQuery('#boardcont'+item).show();
-	board[item].resize();
+function gameShow(gameid){
+	newBoard(gameid);
+	jQuery('#boardcont'+gameid).show();
+	board[gameid].resize();
+	shownGames[gameid] = true;
+}
+
+function gameHide(gameid){
+	jQuery('#boardcont'+gameid).hide();
+	delete shownGames[gameid];
 }
 
 function pgnFromUrl(url, linkId) { 			// analyzes the imported PGN file
@@ -238,7 +223,9 @@ function pgnFromUrl(url, linkId) { 			// analyzes the imported PGN file
 				if(gamesTurnier[pgnDataTemp[k]['Event']] === undefined){
 					gamesTurnier[pgnDataTemp[k]['Event']] = [];
 				}
-				gamesTurnier[pgnDataTemp[k]['Event']].push(gameidTemp);
+				if(gamesTurnier[pgnDataTemp[k]['Event']].indexOf(gameidTemp) === -1){
+					gamesTurnier[pgnDataTemp[k]['Event']].push(gameidTemp);
+				}
 
 				if(pgnDataTemp[k]['Board'] != undefined && pgnDataTemp[k]['WhiteTeam'] != undefined){
 					var paaring;
@@ -247,11 +234,10 @@ function pgnFromUrl(url, linkId) { 			// analyzes the imported PGN file
 					paaring = pgnDataTemp[k]['WhiteTeam'] + ' - ' + pgnDataTemp[k]['BlackTeam'];
 					if((pgnDataTemp[k]['BlackTeam'] + ' - ' + pgnDataTemp[k]['WhiteTeam']) in teamPaarings){
 						paaring = pgnDataTemp[k]['BlackTeam'] + ' - ' + pgnDataTemp[k]['WhiteTeam'];
-						teamPaarings[paaring].push(gameidTemp);
-					}else if(paaring in teamPaarings){
-						teamPaarings[paaring].push(gameidTemp);
 					}else	if(teamPaarings[paaring] === undefined){
 						teamPaarings[paaring] = [];
+					}
+					if(teamPaarings[paaring].indexOf(gameidTemp) === -1){
 						teamPaarings[paaring].push(gameidTemp);
 					}
 
@@ -264,7 +250,6 @@ function pgnFromUrl(url, linkId) { 			// analyzes the imported PGN file
 					// 	teamPaarings[paaring] = [];
 					// }
 					// teamPaarings[paaring].push(gameidTemp);
-					teamExists = true; // Aktiviert das Select-Feld
 				}
 				//newBoard(gameidTemp);
 		  }
@@ -307,10 +292,10 @@ function newBoard(gameid){
 		var html = "<div class='col "+ colselect +" boarditem' id='boardcont"+gameid+"'><div class='boardtexttop' id='game"+gameid+"-dataTop'></div><div class='boardview' id='board"+gameid+"'></div>";
 		html += "<div class='boardtextbuttom' id='game"+gameid+"-data'></div>";
 		html += "<div id='game"+gameid+"-scorecont'><span id='game"+gameid+"-score'></span><span id='game"+gameid+"-depth'></span><span id='game"+gameid+"-bestmove'></span><span id='game"+gameid+"-proposal'></span></div>";
-		html += "<div class='boardbutton' id='board"+gameid+"-buttons'><button title='zum Anfang' type='button' class='btn btn-default btnStart' rel='"+gameid+"'>|<</button>";
-		html += "<button title='vorheriger Zug' type='button' class='btn btn-default btnPrevious' rel='"+gameid+"'><</button>";
-		html += "<button title='nächster Zug' type='button' class='btn btn-default btnNext' rel='"+gameid+"'>></button>";
-		html += "<button title='zum Ende' type='button' class='btn btn-default btnEnd' rel='"+gameid+"'>>|</button><a title='Brett schlie&szlig;en' class='boardclose' rel='"+gameid+"'>Brett schlie&szlig;en</a></div>";
+		html += "<div class='boardbutton' id='board"+gameid+"-buttons'><button title='"+viewerText.toStart+"' type='button' class='btn btn-default btnStart' rel='"+gameid+"'>|<</button>";
+		html += "<button title='"+viewerText.previousMove+"' type='button' class='btn btn-default btnPrevious' rel='"+gameid+"'><</button>";
+		html += "<button title='"+viewerText.nextMove+"' type='button' class='btn btn-default btnNext' rel='"+gameid+"'>></button>";
+		html += "<button title='"+viewerText.toEnd+"' type='button' class='btn btn-default btnEnd' rel='"+gameid+"'>>|</button><a title='"+viewerText.closeBoard+"' class='boardclose' rel='"+gameid+"'>"+viewerText.closeBoard+"</a></div>";
 		html += "</div>";
 
 		$("#board").append(html);
@@ -366,9 +351,7 @@ function newBoard(gameid){
 		});
 
 		jQuery("#boardcont"+gameid+" .boardclose").on('click',function(){
-			jQuery('#boardcont'+$(this).attr('rel')).hide();
-			$("#gameSelect").find("[value='"+$(this).attr('rel')+"']").removeAttr("selected");
-			$("#gameSelect").trigger("chosen:updated");
+			gameHide($(this).attr('rel'));
 			return false;
 		});
 		loadAjaxGame(gameid);
@@ -386,7 +369,6 @@ function getAjaxRequest(loadpgn){
 		pgnlink.forEach(function(item){
 			pgnFromUrl(item.url, item.id);
 		});
-		buildSelectGame();
 	}
 	$.each( Object.keys(game), function(index, value ){
 		if(value != ''){
@@ -455,7 +437,7 @@ function getGametextTop(g, gameid) {
 		result = result[1];
 	}
 
-	var gameHeaderText = '<span class="boardergebnis">'+result+'</span><span class="schwarz" title="Schwarz"></span><strong>' + h.Black + '</strong> ' + h.BlackElo + ((h.BlackTeam != undefined) ? '<br><span class="teamname">' + h.BlackTeam + '</span>' : '') + ((h.Board != undefined) ? ' <span class="board"> - Brett ' + h.Board + '</span>' : '');
+	var gameHeaderText = '<span class="boardergebnis">'+result+'</span><span class="schwarz" title="' + viewerText.black + '"></span><strong>' + h.Black + '</strong> ' + h.BlackElo + ((h.BlackTeam != undefined) ? '<br><span class="teamname">' + h.BlackTeam + '</span>' : '') + ((h.Board != undefined) ? ' <span class="board"> - ' + viewerText.board + ' ' + h.Board + '</span>' : '');
 	if(typeof pgnData[gameid]['BlackClock'] != 'undefined') gameHeaderText += ' <span class="clock"><span class="BlackClock" id="BlackClock'+gameid+'">'+pgnData[gameid]['BlackClock']+'</span></span>';
 	return gameHeaderText;
 }
@@ -470,7 +452,7 @@ function getGametextButton(g, gameid) {
 		result = result[0];
 	}
 
-	var gameHeaderText = '<span class="boardergebnis">'+result+'</span><span class="weiss" title="Weiss"></span><strong>' + h.White + '</strong> ' + h.WhiteElo + ((h.WhiteTeam != undefined) ? '<br><span class="teamname">' + h.WhiteTeam + '</span>' : '') + ((h.Board != undefined) ? '<span class="board"> - Brett ' + h.Board + '</span>' : '');
+	var gameHeaderText = '<span class="boardergebnis">'+result+'</span><span class="weiss" title="' + viewerText.white + '"></span><strong>' + h.White + '</strong> ' + h.WhiteElo + ((h.WhiteTeam != undefined) ? '<br><span class="teamname">' + h.WhiteTeam + '</span>' : '') + ((h.Board != undefined) ? '<span class="board"> - ' + viewerText.board + ' ' + h.Board + '</span>' : '');
 	if(typeof pgnData[gameid]['WhiteClock'] != 'undefined') gameHeaderText += ' <span class="clock"><span class="WhiteClock" id="WhiteClock'+gameid+'">'+pgnData[gameid]['WhiteClock']+'</span></span>';
 
 	gameHeaderText += '</div>';
@@ -524,7 +506,6 @@ function onChange(oldPos, newPos) {
 };
 
 function boardResizeInit(){
-	$("#boardsize").chosen({disable_search:true,width: "90%"});
 	jQuery("#boardsize").on('change',function(){
 		var col = jQuery(this).val();
 		boardResize(col);
@@ -604,7 +585,7 @@ function countdownParse(time) {
 }
 
 function countdownSeconds(seconds) {
-	return countdownPad(seconds) + ' sec';
+	return countdownPad(seconds) + ' ' + viewerText.seconds;
 }
 
 function countdownClock(seconds) {

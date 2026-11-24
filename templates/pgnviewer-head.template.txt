@@ -10,6 +10,5 @@
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <link rel="stylesheet" href="%%% setting behaviour_path %%%/chessboardjs/releases/0.3.0/css/chessboard-0.3.0.min.css">
-<link rel="stylesheet" href="%%% setting behaviour_path %%%/chess/chosen/chosen.min.css">
 <link rel="stylesheet" href="%%% setting layout_path %%%/chess/pgnviewer.css">
 <link rel="stylesheet" href="%%% setting layout_path %%%/chess/multiboard.css">

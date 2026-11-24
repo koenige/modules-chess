@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- chess module\n"
-"POT-Creation-Date: 2026-07-24 12:04+0000\n"
+"POT-Creation-Date: 2026-11-24 21:44+0000\n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -138,6 +138,71 @@ msgstr ""
 
 #: templates/diagram.template.txt:19
 msgid "Black to move"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:16
+#: templates/pgnviewer.template.txt:33
+msgid "Choose games"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:17
+msgid "Boards per row"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:25
+msgid "Show notation"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:28
+msgid "Next update in"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:35
+msgid "Close"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:45
+msgid "Black"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:46
+msgid "Board"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:47
+msgid "Close board"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:48
+msgid "Live"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:49
+msgid "Next move"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:50
+msgid "Show only these"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:51
+msgid "Previous move"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:52
+msgid "sec"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:53
+msgid "Go to end"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:54
+msgid "Go to start"
+msgstr ""
+
+#: templates/pgnviewer.template.txt:55
+msgid "White"
 msgstr ""
 
 #: zzbrick_request/diagram.inc.php:137

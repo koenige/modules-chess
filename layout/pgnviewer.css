@@ -1,4 +1,37 @@
 .chess-pgnviewer{min-height:500px;}
+
+.pgnviewer-toolbar{
+	position: sticky;
+	top: 0;
+	z-index: 2;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75em 1.25em;
+	padding: 0.5em 0;
+	background: #fff;
+	border-bottom: 1px solid #ddd;
+}
+.pgnviewer-toolbar label{display: inline-flex;align-items: center;gap: 0.35em;}
+.pgnviewer-refresh{margin-left: auto;}
+.pgnviewer-refresh .refreshloader{vertical-align: middle;}
+
+.pgnviewer-games{
+	width: min(40em, calc(100vw - 2em));
+	max-height: calc(100vh - 4em);
+	padding: 1em 1.25em;
+	border: 1px solid #888;
+	overflow: auto;
+}
+.pgnviewer-games::backdrop{background: rgba(0, 0, 0, 0.35);}
+.pgnviewer-games h2{margin: 0 0 0.75em;font-size: 1.15em;}
+.pgnviewer-games fieldset{margin: 0 0 1em;padding: 0.5em 0.75em 0.75em;border: 1px solid #ccc;}
+.pgnviewer-games legend{padding: 0 0.25em;}
+.pgnviewer-games legend .label{font-weight: bold;}
+.pgnviewer-games .pgnviewer-only{margin-left: 0.5em;font-weight: normal;}
+.pgnviewer-games label{display: block;margin: 0.25em 0;}
+.pgnviewer-games form{margin: 0;text-align: right;}
+
 .boarditem{margin-top:40px;}
 #board-buttons{margin-top: 5px;margin-bottom: 10px;overflow: auto;}
 #board-buttons button {display: inline;float: left;margin-right: 4px;}
@@ -23,7 +56,6 @@ span.board{ font-size: 12px; }
 .gameNotation .curmove a{font-weight:bold;color:#000;}
 #board.nonotation .gameNotation{display:none;}
 .boardclose{font-weight: bold;cursor: pointer;float:right;font-size: 13px;padding-top: 5px;}
-.search-choice{display: none;}
 
 .boarditem .schwarz, .boarditem .weiss{display: inline-block;width: 10px;height: 10px;background:#000000;margin-right: 5px;}
 .boarditem .weiss{background: #ffffff;display: inline-block;border: 1px solid #000000;}
@@ -69,6 +101,7 @@ span.board{ font-size: 12px; }
     width:33%;
     float: left;
   }
+  .pgnviewer-columns{display: none;}
 }
 
 @media (max-width: 560px){
